@@ -7,51 +7,60 @@ Created on Fri May  3 21:28:58 2019
 import pygame as pg
 import sys
 import Cores as cores
-#from settings import *
-#from sprites import *
+import Classes as classes
 
-with open('Cores.py','r') as arquivo:
-    definicao=arquivo.read()
 
-print(definicao)
 class Game:
     def __init__(self):
         pg.init()
-        self.screen = pg.display.set_mode((cores.WIDTH,cores.HEIGHT))
+        self.screen = pg.display.set_mode((cores.WIDTH, cores.HEIGHT))
         pg.display.set_caption(cores.TITLE)
-        self.clock =pg.time.Clock()
-        pg.key.set_repeat(500,100)
+        self.clock = pg.time.Clock()
+        pg.key.set_repeat(500, 100)
         self.load_data()
-        
+
     def load_data(self):
         pass
-    def new (self):
-        #Inicia todas as variáveis e todos os setups para um novo jogo
-        self.all_sprites=pg.sprite.Group()
+
+    def new(self):
+        # initialize all variables and do all the setup for a new game
+        self.all_sprites = pg.sprite.Group()
+        self.walls = pg.sprite.Group()
+        self.player = classes.Player(self, 10, 10)
+        for x in range(10, 20):
+            classes.Wall(self, x, 5)
+
     def run(self):
-        #Loop do jogo - Falso para finalizar o jogo
-        self.playing=True
+        # game loop - set self.playing = False to end the game
+        self.playing = True
         while self.playing:
-            self.dt=self.clock.tick(cores.FPS)/1000
+            self.dt = self.clock.tick(cores.FPS) / 1000
             self.events()
             self.update()
             self.draw()
+
     def quit(self):
         pg.quit()
         sys.exit()
+
     def update(self):
+        # update portion of the game loop
         self.all_sprites.update()
+
     def draw_grid(self):
-        for x in range (0,cores.WIDTH,cores.TILESIZE):
-            pg.draw.line(self.screen,cores.LIGHTGREY, (x,0),(x, cores.HEIGHT))
-        for y in range (0,cores.HEIGHT,cores.TILESIZE):
-            pg.draw.line(self.screen,cores.LIGHTGREY, (0,y),(cores.WIDTH, y))
+        for x in range(0, cores.WIDTH, cores.TILESIZE):
+            pg.draw.line(self.screen, cores.LIGHTGREY, (x, 0), (x, cores.HEIGHT))
+        for y in range(0, cores.HEIGHT, cores.TILESIZE):
+            pg.draw.line(self.screen, cores.LIGHTGREY, (0, y), (cores.WIDTH, y))
+
     def draw(self):
         self.screen.fill(cores.BGCOLOR)
         self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
+
     def events(self):
+        # catch all events here
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
@@ -64,15 +73,17 @@ class Game:
                     self.player.move(dx=1)
                 if event.key == pg.K_UP:
                     self.player.move(dy=-1)
-                if event.key == pg.K_LEFT:
+                if event.key == pg.K_DOWN:
                     self.player.move(dy=1)
-    def show_start_screen (self):
+
+    def show_start_screen(self):
         pass
-    
+
     def show_go_screen(self):
         pass
 
-g=Game()
+# create the game object
+g = Game()
 g.show_start_screen()
 while True:
     g.new()
