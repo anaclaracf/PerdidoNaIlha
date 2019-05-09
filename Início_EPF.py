@@ -82,8 +82,11 @@ class Game:
                 if event.key == pg.K_DOWN:
                     self.player.move(dy=1)
                     self.player.tired+=1
-                if self.player.tired==10:
+                if self.player.tired%10==0:
                     self.player.energy-=10
+                if self.player.energy <= 0:
+                    self.playing=False
+                    quit()
                 print(self.player.energy)
     def show_start_screen(self):
         pass
