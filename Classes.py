@@ -81,8 +81,8 @@ class Bed(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
-        self.rect.x = x * cores.TILESIZE
-        self.rect.y = y * cores.TILESIZE
+        self.rect.x = x #* cores.TILESIZE
+        self.rect.y = y #* cores.TILESIZE
     def recharge(self,player):
         player.energy = 100
         time.sleep (3)

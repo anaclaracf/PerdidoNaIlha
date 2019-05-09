@@ -33,12 +33,13 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
+        self.bed = classes.Bed(self,300,300)
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile=='1':
                     classes.Wall(self,col,row)
-                if tile=='b':
-                    self.bed=classes.Bed(self,col,row)
+                #if tile=='b':
+                    #self.bed=classes.Bed(self,col,row)
 
     def run(self):
         # Game loop
@@ -96,8 +97,8 @@ class Game:
                 if self.player.tired%10==0:
                     self.player.energy-=10
                 if event.key == pg.K_SPACE:
-                    if self.player.x == self.bed.x:
-                        if self.player.y == self.bed.y:
+                    if self.player.x - self.bed.x<=20 and self.player.x - self.bed.x>=-20:
+                        if self.player.y - self.bed.y <=20 and self.player.y - self.bed.y>=-20:
                             self.bed.recharge(self.player)
                             self.player.tired=0
                     
