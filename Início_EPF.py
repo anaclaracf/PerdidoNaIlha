@@ -89,6 +89,7 @@ class Game:
                     if self.player.x == self.bed.x:
                         if self.player.y == self.bed.y:
                             self.bed.recharge(self.player)
+                            self.player.tired=0
                     
                 print(self.player.energy)
             if self.player.energy <= 0:
