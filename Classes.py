@@ -54,7 +54,6 @@ class Bed(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * cores.TILESIZE
         self.rect.y = y * cores.TILESIZE
-        
-    def recharge(self,Player):
-        self.player.energy = 100
+    def recharge(self,player):
+        player.energy = 100
         time.sleep (3)

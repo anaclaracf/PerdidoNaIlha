@@ -86,6 +86,9 @@ class Game:
                 if self.player.tired%10==0:
                     self.player.energy-=10
                 if event.key == pg.K_SPACE:
+                    if self.player.x == self.bed.x:
+                        if self.player.y == self.bed.y:
+                            self.bed.recharge(self.player)
                     
                 print(self.player.energy)
             if self.player.energy <= 0:
