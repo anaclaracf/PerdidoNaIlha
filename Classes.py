@@ -18,6 +18,7 @@ class Player(pg.sprite.Sprite):
         self.x = x
         self.y = y
         self.energy = 100
+        self.tired= 0 
 
     def move(self, dx=0, dy=0):
         self.x += dx
@@ -39,3 +40,17 @@ class Wall(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * cores.TILESIZE
         self.rect.y = y * cores.TILESIZE
+    
+class Bed(pg.sprite.Sprite):
+    def __init__(self,game,x,y):
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((cores.TILESIZE, cores.TILESIZE))
+        self.image.fill(cores.WHITE)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        
+    def recharge(self,Player):
+        Player.energy = 100

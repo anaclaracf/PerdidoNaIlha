@@ -72,13 +72,19 @@ class Game:
                 #Movimentação
                 if event.key == pg.K_LEFT:
                     self.player.move(dx=-1)
+                    self.player.tired+=1
                 if event.key == pg.K_RIGHT:
                     self.player.move(dx=1)
+                    self.player.tired+=1
                 if event.key == pg.K_UP:
                     self.player.move(dy=-1)
+                    self.player.tired+=1
                 if event.key == pg.K_DOWN:
                     self.player.move(dy=1)
-
+                    self.player.tired+=1
+                if self.player.tired==10:
+                    self.player.energy-=10
+                print(self.player.energy)
     def show_start_screen(self):
         pass
 
