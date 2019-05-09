@@ -16,7 +16,7 @@ YELLOW = (255, 255, 0)
 # Configurações do jogo
 WIDTH = 1024   
 HEIGHT = 768 
-FPS = 90
+FPS = 60
 TITLE = "Escape the island"
 BGCOLOR = DARKGREY
 
@@ -25,4 +25,4 @@ GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
 #Player settings
-PLAYER_SPEED=300
+PLAYER_SPEED=500  

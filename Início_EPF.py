@@ -33,11 +33,12 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
-        self.bed = classes.Bed(self,10,10)
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile=='1':
                     classes.Wall(self,col,row)
+                if tile=='b':
+                    self.bed=classes.Bed(self,col,row)
 
     def run(self):
         # Game loop
@@ -78,6 +79,7 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
+            
                 #Movimentação
                 if event.key == pg.K_LEFT:
                     self.player.move(dx=-1)
@@ -103,6 +105,7 @@ class Game:
             if self.player.energy <= 0:
                 pg.quit()
                 sys.exit()
+                
             
     def show_start_screen(self):
         pass
