@@ -27,6 +27,7 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
+        self.bed = classes.Bed(self,10,10)
         for x in range(10, 20):
             classes.Wall(self, x, 5)
 
@@ -81,13 +82,16 @@ class Game:
                     self.player.tired+=1
                 if event.key == pg.K_DOWN:
                     self.player.move(dy=1)
-                    self.player.tired+=1
+                    self.player.tired+=1    
                 if self.player.tired%10==0:
                     self.player.energy-=10
-                if self.player.energy <= 0:
-                    self.playing=False
-                    quit()
+                if event.key == pg.K_SPACE:
+                    
                 print(self.player.energy)
+            if self.player.energy <= 0:
+                pg.quit()
+                sys.exit()
+            
     def show_start_screen(self):
         pass
 

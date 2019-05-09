@@ -6,6 +6,7 @@ Created on Tue May  7 14:39:22 2019
 """
 import pygame as pg
 import Cores as cores
+import time
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -51,6 +52,9 @@ class Bed(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
+        self.rect.x = x * cores.TILESIZE
+        self.rect.y = y * cores.TILESIZE
         
     def recharge(self,Player):
-        Player.energy = 100
+        self.player.energy = 100
+        time.sleep (3)
