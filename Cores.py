@@ -16,10 +16,13 @@ YELLOW = (255, 255, 0)
 # Configurações do jogo
 WIDTH = 1024   
 HEIGHT = 768 
-FPS = 60
-TITLE = "Tilemap Demo"
+FPS = 90
+TITLE = "Escape the island"
 BGCOLOR = DARKGREY
 
 TILESIZE = 32
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
+
+#Player settings
+PLAYER_SPEED=300

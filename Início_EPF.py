@@ -8,6 +8,8 @@ import pygame as pg
 import sys
 import Cores as cores
 import Classes as classes
+import os
+from os import path
 
 
 class Game:
@@ -20,7 +22,11 @@ class Game:
         self.load_data()
 
     def load_data(self):
-        pass
+        game_folder=path.dirname(__file__)
+        self.map_data=[]
+        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
+            for line in f:
+                self.map_data.append(line)
 
     def new(self):
         # Inicializa as variáveis
@@ -28,8 +34,10 @@ class Game:
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
         self.bed = classes.Bed(self,10,10)
-        for x in range(10, 20):
-            classes.Wall(self, x, 5)
+        for row, tiles in enumerate(self.map_data):
+            for col, tile in enumerate(tiles):
+                if tile=='1':
+                    classes.Wall(self,col,row)
 
     def run(self):
         # Game loop
