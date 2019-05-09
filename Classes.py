@@ -17,6 +17,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
+        self.energy = 100
 
     def move(self, dx=0, dy=0):
         self.x += dx

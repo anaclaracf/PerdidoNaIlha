@@ -23,7 +23,7 @@ class Game:
         pass
 
     def new(self):
-        # initialize all variables and do all the setup for a new game
+        # Inicializa as variáveis
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
@@ -31,7 +31,7 @@ class Game:
             classes.Wall(self, x, 5)
 
     def run(self):
-        # game loop - set self.playing = False to end the game
+        # Game loop
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(cores.FPS) / 1000
@@ -44,29 +44,32 @@ class Game:
         sys.exit()
 
     def update(self):
-        # update portion of the game loop
+        # Atualização do jogo
         self.all_sprites.update()
 
     def draw_grid(self):
+        #Desenha grade
         for x in range(0, cores.WIDTH, cores.TILESIZE):
             pg.draw.line(self.screen, cores.LIGHTGREY, (x, 0), (x, cores.HEIGHT))
         for y in range(0, cores.HEIGHT, cores.TILESIZE):
             pg.draw.line(self.screen, cores.LIGHTGREY, (0, y), (cores.WIDTH, y))
 
     def draw(self):
+        #Inicia parte gráficas
         self.screen.fill(cores.BGCOLOR)
         self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
 
     def events(self):
-        # catch all events here
+        # Eventos
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
+                #Movimentação
                 if event.key == pg.K_LEFT:
                     self.player.move(dx=-1)
                 if event.key == pg.K_RIGHT:
@@ -82,7 +85,7 @@ class Game:
     def show_go_screen(self):
         pass
 
-# create the game object
+# Cria o objeto de jogo
 g = Game()
 g.show_start_screen()
 while True:
