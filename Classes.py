@@ -23,7 +23,8 @@ class Player(pg.sprite.Sprite):
         self.x = x
         self.y = y
         self.energy = 100
-        self.tired= 0 
+        self.tired= 0
+        self.hungry = 0
 
     def get_keys(self):
         self.vx,self.vy=0,0
@@ -86,3 +87,17 @@ class Bed(pg.sprite.Sprite):
     def recharge(self,player):
         player.energy = 100
         time.sleep (3)
+
+class food (pg.sprite.Sprite):
+    def __init__ (self,game,x,y,hungry):
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self,self.groups)
+        self.game = game
+        self.image = pg.Surface ((cores.TILESIZE, cores.TILESIZE))
+        self.image.fill (cores.RED)
+        self.rect = self.image.get_rect()
+        self.x= x
+        self.y= y
+        self.rect.x = x
+        self.rect.y = y
+        self.hungry = hungry

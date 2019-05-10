@@ -37,6 +37,7 @@ class Game:
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
         self.bed = classes.Bed(self,300,300)
+        self.comida = classes.food(self,500,500,4)
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile=='1':
@@ -92,14 +93,24 @@ class Game:
                     self.player.tired+=1    
                 if self.player.tired%10==0:
                     self.player.energy-=10
+                    self.player.hungry+=10
                 if event.key == pg.K_SPACE:
                     if self.player.x - self.bed.x<=20 and self.player.x - self.bed.x>=-20:
                         if self.player.y - self.bed.y <=20 and self.player.y - self.bed.y>=-20:
+                            self.player.x=self.bed.x   ###
+                            self.player.y=self.bed.y
                             self.bed.recharge(self.player)
                             self.player.tired=0
+                    if self.player.x - self.comida.x<=20 and self.player.x - self.comida.x>=-20:
+                        if self.player.y - self.comida.y <=20 and self.player.y - self.comida.y>=-20:
+                            if self.player.hungry>=4:
+                                self.player.hungry-=self.comida.hungry
                     
-                print(self.player.energy)
+                print(self.player.hungry)
             if self.player.energy <= 0:
+                pg.quit()
+                sys.exit()
+            if self.player.hungry >= 100:
                 pg.quit()
                 sys.exit()
                 
