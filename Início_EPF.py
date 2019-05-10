@@ -11,11 +11,14 @@ import Classes as classes
 import os
 from os import path
 
+img_dir = path.join(path.dirname(__file__), 'img')
 
 class Game:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((cores.WIDTH, cores.HEIGHT))
+        self.background = pg.image.load(path.join(img_dir, 'cenarioEPF.png')).convert()
+        self.background_rect = self.background.get_rect()
         pg.display.set_caption(cores.TITLE)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
@@ -58,17 +61,10 @@ class Game:
         # Atualização do jogo
         self.all_sprites.update()
 
-    def draw_grid(self):
-        #Desenha grade
-        for x in range(0, cores.WIDTH, cores.TILESIZE):
-            pg.draw.line(self.screen, cores.LIGHTGREY, (x, 0), (x, cores.HEIGHT))
-        for y in range(0, cores.HEIGHT, cores.TILESIZE):
-            pg.draw.line(self.screen, cores.LIGHTGREY, (0, y), (cores.WIDTH, y))
-
     def draw(self):
         #Inicia parte gráficas
         self.screen.fill(cores.BGCOLOR)
-        self.draw_grid()
+        self.screen.blit(self.background, self.background_rect)
         self.all_sprites.draw(self.screen)
         pg.display.flip()
 
