@@ -7,6 +7,7 @@ Created on Tue May  7 14:39:22 2019
 import pygame as pg
 import Cores as cores
 import time
+import random
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -96,8 +97,22 @@ class food (pg.sprite.Sprite):
         self.image = pg.Surface ((cores.TILESIZE, cores.TILESIZE))
         self.image.fill (cores.RED)
         self.rect = self.image.get_rect()
-        self.x= x
-        self.y= y
+        self.x = random.randrange(0,600)
+        self.y = random.randrange(0,600)
         self.rect.x = x
         self.rect.y = y
         self.hungry = hungry
+    
+inventario = {
+        'roupas': {
+                'calça': ' algodao',
+                'camisa': ' éter',
+                'sapato':'couro'
+                },
+        'comida': {
+                },
+        'recursos':{
+                },
+        'armas' : {
+                }        
+        }

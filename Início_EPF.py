@@ -10,6 +10,7 @@ import Cores as cores
 import Classes as classes
 import os
 from os import path
+import random
 
 img_dir = path.join(path.dirname(__file__), 'img')
 
@@ -105,6 +106,9 @@ class Game:
                         if self.player.y - self.comida.y <=20 and self.player.y - self.comida.y>=-20:
                             if self.player.hungry>=4:
                                 self.player.hungry-=self.comida.hungry
+                                
+                                self.comida = classes.food(self,500,500,4)
+                                
                     
                 print(self.player.hungry)
             if self.player.energy <= 0:
