@@ -38,7 +38,7 @@ class Game:
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
         self.bed = classes.Bed(self,300,300)
-        self.comida = classes.food(self,500,500,4)
+        self.comida = classes.food(self,random.randrange(0,500),random.randrange(0,500),4)
         for row, tiles in enumerate(self.map_data):
             for col, tile in enumerate(tiles):
                 if tile=='1':
@@ -106,8 +106,11 @@ class Game:
                         if self.player.y - self.comida.y <=20 and self.player.y - self.comida.y>=-20:
                             if self.player.hungry>=4:
                                 self.player.hungry-=self.comida.hungry
+                                random_x = random.randrange(0,500)
+                                random_y = random.randrange(0,500)
+                                self.comida = classes.food.reset(self)
+                                self.comida = classes.food(self,random_x,random_y,4)
                                 
-                                self.comida = classes.food(self,500,500,4)
                                 
                     
                 print(self.player.hungry)

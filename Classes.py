@@ -95,13 +95,16 @@ class food (pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
         self.image = pg.Surface ((cores.TILESIZE, cores.TILESIZE))
-        self.image.fill (cores.RED)
         self.rect = self.image.get_rect()
-        self.x = random.randrange(0,600)
-        self.y = random.randrange(0,600)
+        self.image.fill(cores.RED)
+        self.x = x
+        self.y = y
         self.rect.x = x
         self.rect.y = y
         self.hungry = hungry
+        
+    def reset(self):
+        self.image.set_colorkey(cores.BLACK)
     
 inventario = {
         'roupas': {
