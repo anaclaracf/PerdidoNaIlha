@@ -108,7 +108,7 @@ class Game:
                                 self.player.hungry-=self.comida.hungry
                                 random_x = random.randrange(0,500)
                                 random_y = random.randrange(0,500)
-                                self.comida = classes.food.reset(self)
+                                classes.sumir_comida(self.comida)                                
                                 self.comida = classes.food(self,random_x,random_y,4)
                                 
                                 

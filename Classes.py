@@ -103,7 +103,7 @@ class food (pg.sprite.Sprite):
         self.rect.y = y
         self.hungry = hungry
         
-    def reset(self):
+    def update(self,image):
         self.image.set_colorkey(cores.BLACK)
     
 inventario = {
@@ -119,3 +119,7 @@ inventario = {
         'armas' : {
                 }        
         }
+    
+def sumir_comida(food):
+    food.image = pg.Surface ((0.5,0.5))
+    food.image.fill(cores.WHITE)
