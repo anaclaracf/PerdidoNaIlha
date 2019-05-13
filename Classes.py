@@ -103,9 +103,9 @@ class food (pg.sprite.Sprite):
         self.rect.y = y
         self.hungry = hungry
         
-    def update(self,image):
-        self.image.set_colorkey(cores.BLACK)
-    
+    #def update(self,image):
+        #self.image.set_colorkey(cores.BLACK)
+
 inventario = {
         'roupas': {
                 'calça': ' algodao',
@@ -123,3 +123,6 @@ inventario = {
 def sumir_comida(food):
     food.image = pg.Surface ((0.5,0.5))
     food.image.fill(cores.WHITE)
+    
+def trocar_cenario(wallpaper):
+    wallpaper.background = pg.image.load(path.join(img_dir, 'cenario.png')).convert()

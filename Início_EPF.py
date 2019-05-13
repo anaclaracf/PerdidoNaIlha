@@ -13,6 +13,7 @@ from os import path
 import random
 
 img_dir = path.join(path.dirname(__file__), 'img')
+dia=0
 
 class Game:
     def __init__(self):
@@ -24,6 +25,7 @@ class Game:
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
         self.load_data()
+        
 
     def load_data(self):
         game_folder=path.dirname(__file__)
@@ -34,6 +36,7 @@ class Game:
 
     def new(self):
         # Inicializa as variáveis
+        self.dia=0
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.player = classes.Player(self, 10, 10)
@@ -54,7 +57,9 @@ class Game:
             self.events()
             self.update()
             self.draw()
-
+            self.dia+=1
+                
+            
     def quit(self):
         pg.quit()
         sys.exit()
@@ -69,6 +74,9 @@ class Game:
         self.screen.blit(self.background, self.background_rect)
         self.all_sprites.draw(self.screen)
         pg.display.flip()
+        if self.dia>=300:
+            self.background = pg.image.load(path.join(img_dir, 'cenarioNoite.png')).convert()
+            self.background_rect = self.background.get_rect()
 
     def events(self):
         # Eventos
