@@ -69,16 +69,20 @@ class Game:
         self.all_sprites.update()
 
     def draw(self):
-        #Inicia parte gráficas
+        ##Inicia parte gráficas
         self.screen.fill(cores.BGCOLOR)
         self.screen.blit(self.background, self.background_rect)
         self.all_sprites.draw(self.screen)
         pg.display.flip()
-        if self.dia>=300 and self.dia<=600:
+        if self.dia==300:
             self.screen.fill(cores.BLACK)
             self.background = pg.image.load(path.join(img_dir, 'cenarioNoite.png')).convert()
             self.background_rect = self.background.get_rect()
-        
+        if self.dia==600:
+            self.screen.fill(cores.BLACK)
+            self.background = pg.image.load(path.join(img_dir, 'cenarioEPF.png')).convert()
+            self.background_rect = self.background.get_rect()
+            self.dia = 0 
 
     def events(self):
         # Eventos
