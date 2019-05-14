@@ -8,14 +8,17 @@ import pygame as pg
 import Cores as cores
 import time
 import random
+from os import path
+import os
+
+img_dir = path.join(path.dirname(__file__), 'img')
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((cores.TILESIZE, cores.TILESIZE))
-        self.image.fill(cores.YELLOW)
+        self.image = pg.image.load(path.join(img_dir, "homem.png")).convert()
         #self.player_img=pg.image.load(os.path.join(img_folder, 'imagem.png')).convert()
         #self.image.set_colorkey(cores.BLACK)
         #self.image=pg.transform.scale(self.player_img, (100,80))
