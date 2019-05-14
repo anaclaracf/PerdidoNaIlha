@@ -20,8 +20,8 @@ class Player(pg.sprite.Sprite):
         self.game = game
         self.image = pg.image.load(path.join(img_dir, "homem.png")).convert()
         #self.player_img=pg.image.load(os.path.join(img_folder, 'imagem.png')).convert()
-        #self.image.set_colorkey(cores.BLACK)
-        #self.image=pg.transform.scale(self.player_img, (100,80))
+        self.image.set_colorkey(cores.WHITE)
+        self.image=pg.transform.scale(self.image, (50,40))
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0,0
         self.x = x
