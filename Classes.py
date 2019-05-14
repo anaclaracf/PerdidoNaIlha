@@ -103,6 +103,10 @@ class food (pg.sprite.Sprite):
         self.rect.y = y
         self.hungry = hungry
         
+    def done (self):
+        self.kill()
+        
+        
     #def update(self,image):
         #self.image.set_colorkey(cores.BLACK)
 

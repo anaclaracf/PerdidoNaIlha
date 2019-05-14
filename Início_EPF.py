@@ -74,9 +74,11 @@ class Game:
         self.screen.blit(self.background, self.background_rect)
         self.all_sprites.draw(self.screen)
         pg.display.flip()
-        if self.dia>=300:
+        if self.dia>=300 and self.dia<=600:
+            self.screen.fill(cores.BLACK)
             self.background = pg.image.load(path.join(img_dir, 'cenarioNoite.png')).convert()
             self.background_rect = self.background.get_rect()
+        
 
     def events(self):
         # Eventos
@@ -116,12 +118,14 @@ class Game:
                                 self.player.hungry-=self.comida.hungry
                                 random_x = random.randrange(0,500)
                                 random_y = random.randrange(0,500)
-                                classes.sumir_comida(self.comida)                                
+                                self.comida.done()
+                                #classes.sumir_comida(self.comida)                                
                                 self.comida = classes.food(self,random_x,random_y,4)
                                 
                                 
                     
-                print(self.player.hungry)
+                print("Fome={0}".format(self.player.hungry))
+                print("Energia={0}".format(self.player.energy))
             if self.player.energy <= 0:
                 pg.quit()
                 sys.exit()
