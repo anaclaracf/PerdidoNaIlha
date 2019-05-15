@@ -108,7 +108,13 @@ class food (pg.sprite.Sprite):
         
     def done (self):
         self.kill()
-        
+
+class Text (pg.sprite.Sprite):
+    def __init__ (self,game,x,y,text):
+        self.font = pg.font.Font('freesansbold.ttf', 32) 
+        self.text = self.font.render('Voce esta perdido numa ilha', True, cores.WHITE, cores.BLACK) 
+        self.textRect = text.get_rect()   
+        self.textRect.center = (x // cores.WIDTH, y // cores.HEIGHT)      
         
     #def update(self,image):
         #self.image.set_colorkey(cores.BLACK)

@@ -110,6 +110,9 @@ class Game:
                     self.player.energy-=10
                     self.player.hungry+=10
                 if event.key == pg.K_SPACE:
+                    #text=classes.Text.__init__.text
+                    #textRect=classes.Text.textRect
+                    #self.screen.blit(text,textRect)
                     if self.player.x - self.bed.x<=20 and self.player.x - self.bed.x>=-20:
                         if self.player.y - self.bed.y <=20 and self.player.y - self.bed.y>=-20:
                             self.player.x=self.bed.x   ###
