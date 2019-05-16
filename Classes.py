@@ -119,6 +119,18 @@ class Text (pg.sprite.Sprite):
     #def update(self,image):
         #self.image.set_colorkey(cores.BLACK)
 
+class mapa:
+    def __init__(self, filename):
+        self.data = []
+        with open(filename, 'rt') as f:
+            for line in f:
+                self.data.append(line.strip())
+
+        self.tilewidth = len(self.data[0])
+        self.tileheight = len(self.data)
+        self.width = self.tilewidth * cores.TILESIZE
+        self.height = self.tileheight * cores.TILESIZE
+        
 inventario = {
         'roupas': {
                 'calça': ' algodao',

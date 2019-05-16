@@ -36,6 +36,8 @@ class Game:
 
     def new(self):
         # Inicializa as variáveis
+        self.mapx=0
+        self.mapy=0
         self.dia=0
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
@@ -71,7 +73,7 @@ class Game:
     def draw(self):
         ##Inicia parte gráficas
         self.screen.fill(cores.BGCOLOR)
-        self.screen.blit(self.background, self.background_rect)
+        self.screen.blit(self.background, (self.mapx,self.mapy))
         self.all_sprites.draw(self.screen)
         pg.display.flip()
         if self.dia==300:
@@ -95,17 +97,21 @@ class Game:
             
                 #Movimentação
                 if event.key == pg.K_LEFT:
-                    self.player.move(dx=-1)
+                    self.player.move(dx=-10)
                     self.player.tired+=1
+                    self.mapx+=30
                 if event.key == pg.K_RIGHT:
-                    self.player.move(dx=1)
+                    self.player.move(dx=10)
                     self.player.tired+=1
+                    self.mapx-=30                    
                 if event.key == pg.K_UP:
-                    self.player.move(dy=-1)
+                    self.player.move(dy=-10)
                     self.player.tired+=1
+                    self.mapy+=30
                 if event.key == pg.K_DOWN:
-                    self.player.move(dy=1)
-                    self.player.tired+=1    
+                    self.player.move(dy=10)
+                    self.player.tired+=1
+                    self.mapy-=30
                 if self.player.tired%10==0:
                     self.player.energy-=10
                     self.player.hungry+=10
