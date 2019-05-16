@@ -14,6 +14,14 @@ import random
 
 img_dir = path.join(path.dirname(__file__), 'img')
 dia=0
+font_name=pg.font.match_font('arial')
+
+def draw_text(surf,text,size,x,y):
+    font=pg.font.Font(font_name,size)
+    text_surface=font.render(text,True,cores.WHITE)
+    text_rect=text_surface.get_rect()
+    text_rect.midtop=(x,y)
+    surf.blit(text_surface, text_rect)
 
 class Game:
     def __init__(self):
@@ -75,6 +83,7 @@ class Game:
         self.screen.fill(cores.BGCOLOR)
         self.screen.blit(self.background, (self.mapx,self.mapy))
         self.all_sprites.draw(self.screen)
+        draw_text(self.screen,str('Energia:{0}'.format(self.player.energy)),18, cores.WIDTH/2, 10)
         pg.display.flip()
         if self.dia==300:
             self.screen.fill(cores.BLACK)
