@@ -84,6 +84,7 @@ class Game:
         self.screen.blit(self.background, (self.mapx,self.mapy))
         self.all_sprites.draw(self.screen)
         draw_text(self.screen,str('Energia:{0}'.format(self.player.energy)),18, cores.WIDTH/2, 10)
+        draw_text(self.screen,str('Fome:{0}'.format(self.player.hungry)),18,cores.WIDTH/2,30)
         pg.display.flip()
         if self.dia==300:
             self.screen.fill(cores.BLACK)
