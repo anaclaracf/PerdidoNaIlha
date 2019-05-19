@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri May  3 21:57:06 2019
+Created on Fri May 17 14:19:13 2019
 
-@author: User
+@author: beatrizcf
 """
-#Cores
+
+# define some colors (R, G, B)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 DARKGREY = (40, 40, 40)
@@ -13,17 +15,16 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 
-# Configurações do jogo
-WIDTH = 1024   
-HEIGHT = 768 
+# game settings
+WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
+HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
 FPS = 60
-TITLE = "Escape the island"
+TITLE = "Tilemap Demo"
 BGCOLOR = DARKGREY
 
 TILESIZE = 32
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
-#Player settings
-PLAYER_SPEED=500  
-
+# Player settings
+PLAYER_SPEED = 300
