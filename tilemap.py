@@ -9,7 +9,7 @@ Created on Fri May 17 14:20:45 2019
 import pygame as pg
 import settings
 
-def colide_hit_rect (one,two):
+def collide_hit_rect (one,two):
     return one.hit_rect.colliderect(two.rect)
 
 class Map:
@@ -34,8 +34,8 @@ class Camera:
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
-        x = -target.rect.x + int(settings.WIDTH / 2)
-        y = -target.rect.y + int(settings.HEIGHT / 2)
+        x = -target.rect.centerx + int(settings.WIDTH / 2)
+        y = -target.rect.centery + int(settings.HEIGHT / 2)
 
         # limit scrolling to map size
         x = min(0, x)  # left

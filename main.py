@@ -18,6 +18,13 @@ img_dir = path.join(path.dirname(__file__), 'img')
 
 font_name=pg.font.match_font('arial')
 
+def draw_text(surf,text,size,x,y):
+    font=pg.font.Font(font_name,size)
+    text_surface=font.render(text,True,settings.WHITE)
+    text_rect=text_surface.get_rect()
+    text_rect.midtop=(x,y)
+    surf.blit(text_surface, text_rect)
+    
 class Game:
     def __init__(self):
         pg.init()
@@ -29,13 +36,13 @@ class Game:
 
     def load_data(self):
         game_folder = path.dirname(__file__)
+        img_folder = path.join(game_folder, 'img')
         self.map = tilemap.Map(path.join(game_folder, 'map2.txt'))
+        self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
 
     def new(self):
         # initialize all variables and do all the setup for a new game
         self.dia=0
-        self.tabuas=0
-        self.cordas=0
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.bed = pg.sprite.Group()
@@ -78,12 +85,13 @@ class Game:
         sys.exit()
 
     def win (self):
-       if self.tabuas == 5 and self.cordas==3:
+       if self.player.tabuas == 5 and self.player.cordas==3:
                self.background = pg.image.load(path.join(img_dir, "youwin.png")).convert()
                self.background_rect = self.background.get_rect()
                self.background=pg.transform.scale(self.background, (200,150))
                time.sleep(2)
                self.quit()
+               
     def update(self):
         # update portion of the game loop
         self.all_sprites.update()
@@ -94,7 +102,6 @@ class Game:
             pg.draw.line(self.screen, settings.LIGHTGREY, (x, 0), (x, settings.HEIGHT))
         for y in range(0, settings.HEIGHT, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (0, y), (settings.WIDTH, y))
-
     def draw_text(self,text,size,x,y):
         font=pg.font.Font(font_name,size)
         text_surface=font.render(text,True,settings.WHITE)
@@ -110,16 +117,16 @@ class Game:
         self.draw_text(str('Energia:{0}'.format(self.player.energy)),18, settings.WIDTH/2, 10)
         self.draw_text(str('Fome:{0}'.format(self.player.hungry)),18,settings.WIDTH/2,30)
         self.draw_text(str('Vida:{0}'.format(self.player.health)),18,settings.WIDTH/2,50)
-        self.draw_text(str('Madeiras:{0}'.format(self.tabuas)),18,settings.WIDTH-70,10)
-        self.draw_text(str('Cordas:{0}'.format(self.cordas)),18,settings.WIDTH-70,30)
+        self.draw_text(str('Madeiras:{0}'.format(self.player.tabuas)),18,settings.WIDTH-70,10)
+        self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
         self.draw_text(str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
         self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
-        if self.tabuas==5 and self.cordas==3:    
+        if self.player.tabuas==5 and self.player.cordas==3:    
             self.draw_text(str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
         
         if self.inimigo.health>0:
-            if self.player.x - self.inimigo.x<=400 and self.player.x - self.inimigo.x>=-400:
-                if self.player.y - self.inimigo.y <=400 and self.player.y - self.inimigo.y>=-400:
+            if self.player.pos.x - self.inimigo.x<=400 and self.player.pos.x - self.inimigo.x>=-400:
+                if self.player.pos.y - self.inimigo.y <=400 and self.player.pos.y - self.inimigo.y>=-400:
                     self.draw_text(str('Vida do inimigo:{0}'.format(self.inimigo.health)),18,settings.WIDTH-70,settings.HEIGHT/2)
         pg.display.flip()
         #if self.dia==300:
@@ -151,41 +158,43 @@ class Game:
                 if event.key == pg.K_DOWN:
                     self.player.tired+=1
                 if self.player.tired%10==0 and self.player.tired!=0:
-                    self.player.energy-=10
-                    self.player.hungry+=10
+                    self.player.energy-=1
+                    self.player.hungry+=1
                 if event.key == pg.K_SPACE:
-                    print(self.player.x - self.inimigo.x)
-                    if self.player.x - self.bed.x<=50 and self.player.x - self.bed.x>=-50:
-                        if self.player.y - self.bed.y <=50 and self.player.y - self.bed.y>=-50:
-                            self.player.x=self.bed.x   ###
-                            self.player.y=self.bed.y
+                    #print(self.player.x - self.inimigo.x)
+                    if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:
+                        if self.player.pos.y - self.bed.y <=50 and self.player.pos.y - self.bed.y>=-50:
+                            self.player.pos.x=self.bed.x   ###
+                            self.player.pos.y=self.bed.y
                             self.bed.recharge(self.player)
                             self.player.tired=0
                     for i in self.comidas:
-                        if self.player.x - i.x<=50 and self.player.x - i.x>=-50:
-                            if self.player.y - i.y <=50 and self.player.y - i.y>=-50:
+                        if self.player.pos.x - i.x<=50 and self.player.pos.x - i.x>=-50:
+                            if self.player.pos.y - i.y <=50 and self.player.pos.y - i.y>=-50:
                                 if self.player.hungry>=4:
                                     self.player.hungry-=i.hungry
                                     random_x = random.randrange(0,500)
                                     random_y = random.randrange(0,500)
                                     i.done()                                
                                     self.comidas.append(sprites.food(self,random_x,random_y,4)) 
-                    if self.player.x - self.madeira.x<=50 and self.player.x - self.madeira.x>=-50:
-                        if self.player.y - self.madeira.y <=50 and self.player.y - self.madeira.y>=-50:
-                            self.tabuas+=1
+                                    if self.player.hungry<0:
+                                        self.player.hungry=0
+                    if self.player.pos.x - self.madeira.x<=50 and self.player.pos.x - self.madeira.x>=-50:
+                        if self.player.pos.y - self.madeira.y <=50 and self.player.pos.y - self.madeira.y>=-50:
+                            self.player.tabuas+=1
                             self.madeira.gotten()
                             random_x = random.randrange(0,500)
                             random_y = random.randrange(0,500)
                             self.madeira = sprites.wood(self,random_x,random_y)
-                    if self.player.x - self.cordas_classe.x<=50 and self.player.x - self.cordas_classe.x>=-50:
-                        if self.player.y - self.cordas_classe.y <=50 and self.player.y - self.cordas_classe.y>=-50:
-                            self.cordas+=1
+                    if self.player.pos.x - self.cordas_classe.x<=50 and self.player.pos.x - self.cordas_classe.x>=-50:
+                        if self.player.pos.y - self.cordas_classe.y <=50 and self.player.pos.y - self.cordas_classe.y>=-50:
+                            self.player.cordas+=1
                             self.cordas_classe.gotten()
                             random_x = random.randrange(0,500)
                             random_y = random.randrange(0,500)
                             self.cordas_classe = sprites.rope(self,random_x,random_y)
-                    if self.player.x - self.inimigo.x<=50 and self.player.x - self.inimigo.x>=-50:
-                        if self.player.y - self.inimigo.y <=50 and self.player.y - self.inimigo.y>=-50:
+                    if self.player.pos.x - self.inimigo.x<=50 and self.player.pos.x - self.inimigo.x>=-50:
+                        if self.player.pos.y - self.inimigo.y <=50 and self.player.pos.y - self.inimigo.y>=-50:
                             self.player.health-=self.inimigo.damage
                             self.inimigo.health-=self.player.damage
                             self.inimigo.die()
