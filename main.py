@@ -18,12 +18,6 @@ img_dir = path.join(path.dirname(__file__), 'img')
 
 font_name=pg.font.match_font('arial')
 
-def draw_text(surf,text,size,x,y):
-    font=pg.font.Font(font_name,size)
-    text_surface=font.render(text,True,settings.WHITE)
-    text_rect=text_surface.get_rect()
-    text_rect.midtop=(x,y)
-    surf.blit(text_surface, text_rect)
 class Game:
     def __init__(self):
         pg.init()
@@ -101,26 +95,32 @@ class Game:
         for y in range(0, settings.HEIGHT, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (0, y), (settings.WIDTH, y))
 
+    def draw_text(self,text,size,x,y):
+        font=pg.font.Font(font_name,size)
+        text_surface=font.render(text,True,settings.WHITE)
+        text_rect=text_surface.get_rect()
+        text_rect.midtop=(x,y)
+        self.screen.blit(text_surface, text_rect)
+
     def draw(self):
         self.screen.fill(settings.BGCOLOR)
         self.draw_grid()
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
-        pg.display.flip()
-        draw_text(self.screen,str('Energia:{0}'.format(self.player.energy)),18, settings.WIDTH/2, 10)
-        draw_text(self.screen,str('Fome:{0}'.format(self.player.hungry)),18,settings.WIDTH/2,30)
-        draw_text(self.screen,str('Vida:{0}'.format(self.player.health)),18,settings.WIDTH/2,50)
-        draw_text(self.screen,str('Madeiras:{0}'.format(self.tabuas)),18,settings.WIDTH-70,10)
-        draw_text(self.screen,str('Cordas:{0}'.format(self.cordas)),18,settings.WIDTH-70,30)
-        draw_text(self.screen,str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
-        draw_text(self.screen,str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
+        self.draw_text(str('Energia:{0}'.format(self.player.energy)),18, settings.WIDTH/2, 10)
+        self.draw_text(str('Fome:{0}'.format(self.player.hungry)),18,settings.WIDTH/2,30)
+        self.draw_text(str('Vida:{0}'.format(self.player.health)),18,settings.WIDTH/2,50)
+        self.draw_text(str('Madeiras:{0}'.format(self.tabuas)),18,settings.WIDTH-70,10)
+        self.draw_text(str('Cordas:{0}'.format(self.cordas)),18,settings.WIDTH-70,30)
+        self.draw_text(str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
+        self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
         if self.tabuas==5 and self.cordas==3:    
-            draw_text(self.screen,str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
+            self.draw_text(str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
         
         if self.inimigo.health>0:
             if self.player.x - self.inimigo.x<=400 and self.player.x - self.inimigo.x>=-400:
                 if self.player.y - self.inimigo.y <=400 and self.player.y - self.inimigo.y>=-400:
-                    draw_text(self.screen,str('Vida do inimigo:{0}'.format(self.inimigo.health)),18,settings.WIDTH-70,settings.HEIGHT/2)
+                    self.draw_text(str('Vida do inimigo:{0}'.format(self.inimigo.health)),18,settings.WIDTH-70,settings.HEIGHT/2)
         pg.display.flip()
         #if self.dia==300:
             #self.screen.fill(settings.BLACK)
