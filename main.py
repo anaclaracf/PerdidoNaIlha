@@ -111,10 +111,13 @@ class Game:
         draw_text(self.screen,str('Fome:{0}'.format(self.player.hungry)),18,settings.WIDTH/2,30)
         draw_text(self.screen,str('Vida:{0}'.format(self.player.health)),18,settings.WIDTH/2,50)
         draw_text(self.screen,str('Cordas:{0}'.format(self.cordas)),18,settings.WIDTH-70,10)
-        draw_text(self.screen,str('Madeiras:{0}'.format(self.tabuas)),18,settings.WIDTH-70,30)
+        draw_text(self.screen,str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
         draw_text(self.screen,str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
         if self.tabuas==5 and self.cordas==3:    
             draw_text(self.screen,str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
+        if self.player.x - self.inimigo.x<=400 and self.player.x - self.inimigo.x>=-400:
+            if self.player.y - self.inimigo.y <=400 and self.player.y - self.inimigo.y>=-400:
+                draw_text(self.screen,str('Vida do inimigo:{0}'.format(self.inimigo.health)),18,settings.WIDTH-70,settings.HEIGHT/2)
         pg.display.flip()
         #if self.dia==300:
             #self.screen.fill(settings.BLACK)
@@ -131,7 +134,6 @@ class Game:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
-            
                 
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
@@ -149,7 +151,7 @@ class Game:
                     self.player.energy-=10
                     self.player.hungry+=10
                 if event.key == pg.K_SPACE:
-                    #print(self.player.x - self.comida.x)
+                    print(self.player.x - self.inimigo.x)
                     if self.player.x - self.bed.x<=50 and self.player.x - self.bed.x>=-50:
                         if self.player.y - self.bed.y <=50 and self.player.y - self.bed.y>=-50:
                             self.player.x=self.bed.x   ###
@@ -190,7 +192,6 @@ class Game:
                     
                 print("Fome={0}".format(self.player.hungry))
                 print("Energia={0}".format(self.player.energy))
-                
             if self.player.energy <= 0:
                 pg.quit()
                 sys.exit()
