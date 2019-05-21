@@ -185,14 +185,16 @@ class Game:
                             self.madeira.gotten()
                             random_x = random.randrange(0,500)
                             random_y = random.randrange(0,500)
-                            self.madeira = sprites.wood(self,random_x,random_y)
+                            if self.player.tabuas<5:
+                                self.madeira = sprites.wood(self,random_x,random_y)
                     if self.player.pos.x - self.cordas_classe.x<=50 and self.player.pos.x - self.cordas_classe.x>=-50:
                         if self.player.pos.y - self.cordas_classe.y <=50 and self.player.pos.y - self.cordas_classe.y>=-50:
                             self.player.cordas+=1
                             self.cordas_classe.gotten()
                             random_x = random.randrange(0,500)
                             random_y = random.randrange(0,500)
-                            self.cordas_classe = sprites.rope(self,random_x,random_y)
+                            if self.player.cordas<3:
+                                self.cordas_classe = sprites.rope(self,random_x,random_y)
                     if self.player.pos.x - self.inimigo.x<=50 and self.player.pos.x - self.inimigo.x>=-50:
                         if self.player.pos.y - self.inimigo.y <=50 and self.player.pos.y - self.inimigo.y>=-50:
                             self.player.health-=self.inimigo.damage
