@@ -48,6 +48,7 @@ class Game:
         self.comida = pg.sprite.Group()
         self.madeira = sprites.wood(self,random.randrange(0,800),random.randrange(0,800))
         self.cordas_classe = sprites.rope (self,random.randrange(0,800),random.randrange(0,800))
+        self.inimigo = pg.sprite.Group()
         self.comidas=[]
         for i in range(10):    
             self.comidas.append(sprites.food(self,random.randrange(0,500),random.randrange(0,500),4))
@@ -62,8 +63,8 @@ class Game:
                     self.all_sprites.add(self.player)
                 if tile == 'b':
                     self.bed = sprites.Bed(self,col,row)
-                #if tile == '.' and random.randrange (0,50)==1:
-                    #self.comida = sprites.food(self,col*32,row*32,4)
+                if tile == 'e':
+                    self.inimigo = sprites.canibais(self,col,row)
                     
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
@@ -108,6 +109,7 @@ class Game:
         pg.display.flip()
         draw_text(self.screen,str('Energia:{0}'.format(self.player.energy)),18, settings.WIDTH/2, 10)
         draw_text(self.screen,str('Fome:{0}'.format(self.player.hungry)),18,settings.WIDTH/2,30)
+        draw_text(self.screen,str('Vida:{0}'.format(self.player.health)),18,settings.WIDTH/2,50)
         draw_text(self.screen,str('Cordas:{0}'.format(self.cordas)),18,settings.WIDTH-70,10)
         draw_text(self.screen,str('Madeiras:{0}'.format(self.tabuas)),18,settings.WIDTH-70,30)
         draw_text(self.screen,str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
@@ -177,6 +179,11 @@ class Game:
                             random_x = random.randrange(0,500)
                             random_y = random.randrange(0,500)
                             self.cordas_classe = sprites.rope(self,random_x,random_y)
+                    if self.player.x - self.inimigo.x<=50 and self.player.x - self.inimigo.x>=-50:
+                        if self.player.y - self.inimigo.y <=50 and self.player.y - self.inimigo.y>=-50:
+                            self.player.health-=self.inimigo.damage
+                            self.inimigo.health-=self.player.damage
+                            self.inimigo.die()
                             
                                 
                                 

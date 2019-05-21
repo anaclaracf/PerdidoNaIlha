@@ -30,7 +30,9 @@ class Player(pg.sprite.Sprite):
         self.energy = 100
         self.tired= 0
         self.hungry = 0
-
+        self.health = 100
+        self.damage = 10
+        
     def get_keys(self):
         self.vx, self.vy = 0, 0
         keys = pg.key.get_pressed()
@@ -154,6 +156,25 @@ class rope (pg.sprite.Sprite):
     def gotten (self):
         self.kill()
     
+class canibais(pg.sprite.Sprite):
+    def __init__(self,game,x,y):
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self,self.groups)
+        self.game = game
+        self.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+        self.rect = self.image.get_rect()
+        self.image.fill (settings.YELLOW)
+        self.x = x * settings.TILESIZE
+        self.y= y * settings.TILESIZE
+        self.rect.x = x * settings.TILESIZE
+        self.rect.y = y * settings.TILESIZE
+        self.damage = 5
+        self.health = 30
+        
+    def die(self):
+        if self.health <=0:
+            self.kill()
+        
 inventario = {
         'roupas': {
                 'calça': ' algodao',
