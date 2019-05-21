@@ -9,6 +9,8 @@ Created on Fri May 17 14:20:45 2019
 import pygame as pg
 import settings
 
+def colide_hit_rect (one,two):
+    return one.hit_rect.colliderect(two.rect)
 
 class Map:
     def __init__(self, filename):
