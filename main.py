@@ -113,6 +113,10 @@ class Game:
         self.screen.fill(settings.BGCOLOR)
         self.draw_grid()
         for sprite in self.all_sprites:
+            if isinstance(sprite,sprites.Player):
+                sprite.draw_life()
+            if isinstance(sprite,sprites.canibais):
+                sprite.draw_life()
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         self.draw_text(str('Energia:{0}'.format(self.player.energy)),18, settings.WIDTH/2, 10)
         self.draw_text(str('Fome:{0}'.format(self.player.hungry)),18,settings.WIDTH/2,30)

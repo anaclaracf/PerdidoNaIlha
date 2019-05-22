@@ -89,6 +89,18 @@ class Player(pg.sprite.Sprite):
         #self.energy -= 0.5
         if self.energy<0 or self.hungry>1000:
             self.kill()
+        
+    def draw_life(self):
+        if self.health>60:
+            col=settings.GREEN
+        elif self.health>30:
+            col = settings.YELLOW
+        else:
+            col=settings.RED
+        width = int(self.rect.width * self.health/100)
+        self.health_bar = pg.Rect(0,0,width,7)
+        if self.health<100:
+            pg.draw.rect(self.image,col,self.health_bar)
 
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -232,6 +244,17 @@ class canibais(pg.sprite.Sprite):
                 self.vel.y = 0
                 self.hit_rect.centery = self.pos.y
         
+    def draw_life(self):
+        if self.health>20:
+            col=settings.GREEN
+        elif self.health>10:
+            col = settings.YELLOW
+        else:
+            col=settings.RED
+        width = int(self.rect.width * self.health/100)
+        self.health_bar = pg.Rect(0,0,width,7)
+        if self.health<30:
+            pg.draw.rect(self.image,col,self.health_bar)
 inventario = {
         'roupas': {
                 'calça': ' algodao',
