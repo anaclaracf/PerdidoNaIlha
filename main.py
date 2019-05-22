@@ -17,6 +17,72 @@ import time
 img_dir = path.join(path.dirname(__file__), 'img')
 
 font_name=pg.font.match_font('arial')
+font_name2=pg.font.match_font('FelixTitling')
+
+gameDisplay = pg.display.set_mode((settings.WIDTH,settings.HEIGHT))
+pg.display.set_caption("PERDIDO NA ILHA")
+clock = pg.time.Clock()
+ 
+def text_objects(text, font):
+    textSurface = font.render(text, True, settings.WHITE)
+    return textSurface, textSurface.get_rect()
+
+def message_display(text,pg):
+    largeText = pg.font.Font(font_name,90)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2))
+    gameDisplay.blit(TextSurf, TextRect)
+    pg.display.update()
+    time.sleep(2)
+    game_loop()
+
+def button(msg,x,y,w,h,ic,ac,action=None):
+    mouse = pg.mouse.get_pos()
+    click = pg.mouse.get_pressed()
+    if x+w > mouse[0] > x and y+h > mouse [1] > y:
+        pg.draw.rect(gameDisplay, ac, (x, y, w, h))
+        if click[0] == 1 and action != None:
+            if action == "play":
+                g = Game()
+                g.show_start_screen()
+                while True:
+                    g.new()
+                    g.run()
+                    g.show_go_screen()
+            elif action == "quit":
+                pg.quit()
+                sys.exit()
+                
+    else:
+        pg.draw.rect(gameDisplay, ic, (x, y, w, h))
+    smallText = pg.font.Font(font_name2, 30)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ( (x+(w/2)), (y+(h/2)) )
+    gameDisplay.blit(textSurf, textRect)
+                
+                
+class game_intro:
+    def __init__(self,game):
+        pg.init()
+        intro = True
+        while intro:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+            background= pg.image.load(path.join(img_dir, "Fundo3.png")).convert()
+            gameDisplay.blit(background, background.get_rect())
+            largeText = pg.font.Font(font_name2,115)
+            TextSurf, TextRect = text_objects("ESCAPE THE ISLAND", largeText)
+            TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2))
+            gameDisplay.blit(TextSurf, TextRect)
+            
+            button("GO!",350, 500, 100, 50,settings.BLACK,settings.LIGHTGREY,"play")
+            button("QUIT",550, 500, 100, 50,settings.BLACK,settings.LIGHTGREY,"quit")
+        
+            
+            pg.display.update()
+            clock.tick(15)
 
 def draw_text(surf,text,size,x,y):
     font=pg.font.Font(font_name,size)
@@ -86,10 +152,13 @@ class Game:
 
     def win (self):
        if self.player.tabuas == 5 and self.player.cordas==3:
+               #background = pg.image.load(path.join(img_dir, "youwin.png")).convert()
+               #gameDisplay.blit(background, background.get_rect())
                self.background = pg.image.load(path.join(img_dir, "youwin.png")).convert()
                self.background_rect = self.background.get_rect()
                self.background=pg.transform.scale(self.background, (200,150))
-               time.sleep(2)
+               #pg.display.update()
+               time.sleep(4)
                self.quit()
                
     def update(self):
@@ -224,10 +293,6 @@ class Game:
     def show_go_screen(self):
         pass
 
+
+game_intro(pg)
 # create the game object
-g = Game()
-g.show_start_screen()
-while True:
-    g.new()
-    g.run()
-    g.show_go_screen()
