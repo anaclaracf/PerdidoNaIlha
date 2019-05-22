@@ -42,3 +42,7 @@ PLAYER_IMG = 'manBlue_gun.png'
 FOOD_NUTRI = 20
 
 CERCA_IMG = 'cerca.png'
+
+#Monstro
+MOB_SPEED = 150
+MOB_HIT_RECT = pg.Rect(0,0,30,30)

@@ -125,9 +125,10 @@ class Game:
             self.draw_text(str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
         
         if self.inimigo.health>0:
-            if self.player.pos.x - self.inimigo.x<=400 and self.player.pos.x - self.inimigo.x>=-400:
-                if self.player.pos.y - self.inimigo.y <=400 and self.player.pos.y - self.inimigo.y>=-400:
+            if self.player.pos.x - self.inimigo.pos.x<=400 and self.player.pos.x - self.inimigo.pos.x>=-400:
+                if self.player.pos.y - self.inimigo.pos.y <=400 and self.player.pos.y - self.inimigo.pos.y>=-400:
                     self.draw_text(str('Vida do inimigo:{0}'.format(self.inimigo.health)),18,settings.WIDTH-70,settings.HEIGHT/2)
+                    self.inimigo.persecution()
         pg.display.flip()
         #if self.dia==300:
             #self.screen.fill(settings.BLACK)
@@ -195,8 +196,8 @@ class Game:
                             random_y = random.randrange(0,500)
                             if self.player.cordas<3:
                                 self.cordas_classe = sprites.rope(self,random_x,random_y)
-                    if self.player.pos.x - self.inimigo.x<=50 and self.player.pos.x - self.inimigo.x>=-50:
-                        if self.player.pos.y - self.inimigo.y <=50 and self.player.pos.y - self.inimigo.y>=-50:
+                    if self.player.pos.x - self.inimigo.pos.x<=50 and self.player.pos.x - self.inimigo.pos.x>=-50:
+                        if self.player.pos.y - self.inimigo.pos.y <=50 and self.player.pos.y - self.inimigo.pos.y>=-50:
                             self.player.health-=self.inimigo.damage
                             self.inimigo.health-=self.player.damage
                             self.inimigo.die()

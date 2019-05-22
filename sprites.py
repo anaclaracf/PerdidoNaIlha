@@ -177,16 +177,60 @@ class canibais(pg.sprite.Sprite):
         self.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
         self.rect = self.image.get_rect()
         self.image.fill (settings.YELLOW)
-        self.x = x * settings.TILESIZE
-        self.y= y * settings.TILESIZE
-        self.rect.x = x * settings.TILESIZE
-        self.rect.y = y * settings.TILESIZE
+        self.pos= vec(x,y)* settings.TILESIZE
+        self.hit_rect = settings.MOB_HIT_RECT
+        self.hit_rect.center = self.rect.center
+        #self.x = x * settings.TILESIZE
+        #self.y= y * settings.TILESIZE
+        #self.rect.x = x * settings.TILESIZE
+        #self.rect.y = y * settings.TILESIZE
+        self.vel= vec(0,0)
+        self.acc = vec(0,0)
+        self.rect.center = self.pos
+        self.rot = 0
         self.damage = 5
         self.health = 30
+        
+    def update(self):
+        self.rot= (self.game.player.pos - self.pos).angle_to(vec(1,0))
+        self.image = pg.transform.rotate (self.game.player_img,self.rot)
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pos
+        self.hit_rect.centerx = self.pos.x
+        self.collide_with_walls('x')
+        self.hit_rect.centery = self.pos.y
+        self.collide_with_walls('y') 
+        self.rect.center = self.hit_rect.center
+        
+    def persecution(self):
+        self.acc=  vec(settings.MOB_SPEED,0).rotate(-self.rot)
+        self.acc += self.vel * -1
+        self.vel += self.acc * self.game.dt
+        self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt **2
         
     def die(self):
         if self.health <=0:
             self.kill()
+        
+    def collide_with_walls(self, dir):
+        if dir == 'x':
+            hits = pg.sprite.spritecollide(self, self.game.walls, False, collide_hit_rect)
+            if hits:
+                if self.vel.x > 0:
+                    self.pos.x = hits[0].rect.left - self.hit_rect.width/2 
+                if self.vel.x < 0:
+                    self.pos.x = hits[0].rect.right +  self.hit_rect.width/2 
+                self.vel.x = 0
+                self.hit_rect.centerx = self.pos.x
+        if dir == 'y':
+            hits = pg.sprite.spritecollide(self, self.game.walls, False, collide_hit_rect)
+            if hits:
+                if self.vel.y > 0:
+                    self.pos.y = hits[0].rect.top - self.hit_rect.height/2
+                if self.vel.y < 0:
+                    self.pos.y = hits[0].rect.bottom + self.hit_rect.height/2
+                self.vel.y = 0
+                self.hit_rect.centery = self.pos.y
         
 inventario = {
         'roupas': {
