@@ -130,7 +130,7 @@ class Game:
             self.win()
             self.check_damage()
             self.dia+=1
-
+            self.morte()
     def quit(self):
         pg.quit()
         sys.exit()
@@ -155,6 +155,16 @@ class Game:
         self.all_sprites.update()
         self.camera.update(self.player)
 
+    def morte(self):
+        if self.player.energy <= 0:
+            pg.quit()
+            sys.exit()
+        if self.player.hungry >= 100:
+            pg.quit()
+            sys.exit()
+        if self.player.health<=0:
+            pg.quit()
+            sys.exit()
     def draw_grid(self):
         for x in range(0, settings.WIDTH, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (x, 0), (x, settings.HEIGHT))
@@ -269,12 +279,6 @@ class Game:
                     
                 print("Fome={0}".format(self.player.hungry))
                 print("Energia={0}".format(self.player.energy))
-            if self.player.energy <= 0:
-                pg.quit()
-                sys.exit()
-            if self.player.hungry >= 100:
-                pg.quit()
-                sys.exit()
 
     def show_start_screen(self):
         pass
