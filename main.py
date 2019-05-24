@@ -54,7 +54,7 @@ class game_intro:
 			gameDisplay.blit(background, background.get_rect())
 			largeText = pg.font.Font(font_name2,115)
 			TextSurf, TextRect = text_objects("ESCAPE THE ISLAND", largeText)
-			TextSurf, TextRect = text_objects((40,350),"press space to continue", largeText)
+			#TextSurf, TextRect = text_objects((40,350),"press space to continue", largeText)
 			
 			TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2))
 			gameDisplay.blit(TextSurf, TextRect)
@@ -128,7 +128,8 @@ class Game:
             self.update()
             self.draw()
             self.win()
-            #self.dia+=1
+            self.check_damage()
+            self.dia+=1
 
     def quit(self):
         pg.quit()
@@ -141,7 +142,14 @@ class Game:
                pg.display.update()
                time.sleep(4)
                self.quit()
-               
+              
+    def check_damage(self):
+        if self.dia%60==0:
+            if self.inimigo.health>0:
+                if self.player.pos.x - self.inimigo.pos.x<=50 and self.player.pos.x - self.inimigo.pos.x>=-50:
+                    if self.player.pos.y - self.inimigo.pos.y <=50 and self.player.pos.y - self.inimigo.pos.y>=-50:
+                        self.player.health-=self.inimigo.damage
+    
     def update(self):
         # update portion of the game loop
         self.all_sprites.update()
