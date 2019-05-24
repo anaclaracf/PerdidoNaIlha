@@ -52,12 +52,18 @@ class game_intro:
 						intro=False
 			background= pg.image.load(path.join(img_dir, "fundo2.png")).convert()
 			gameDisplay.blit(background, background.get_rect())
+			
 			largeText = pg.font.Font(font_name2,115)
 			TextSurf, TextRect = text_objects("ESCAPE THE ISLAND", largeText)
-			TextSurf, TextRect = text_objects((40,350),"press space to continue", largeText)
 			
 			TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2))
 			gameDisplay.blit(TextSurf, TextRect)
+			
+			smallText = pg.font.Font(font_name,40)
+			TextSurf, TextRect = text_objects("press space to play", smallText)
+			TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2 + 100))
+			gameDisplay.blit(TextSurf, TextRect)
+
 			
 			pg.display.update()
 			
@@ -138,7 +144,9 @@ class Game:
        if self.player.tabuas == 5 and self.player.cordas==3:
                background = pg.image.load(path.join(img_dir, "youwin.png")).convert()
                gameDisplay.blit(background, background.get_rect())
+			   
                pg.display.update()
+
                time.sleep(4)
                self.quit()
                
