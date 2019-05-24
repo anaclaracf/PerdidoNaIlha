@@ -33,7 +33,7 @@ FONT_NAME = pg.font.match_font('arial')
 
 # Player settings
 PLAYER_SPEED = 300
-PLAYER_ROT_SPEED = 250
+PLAYER_ROT_SPEED = 175
 PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
 PLAYER_ENERGY = 100
 PLAYER_HUNGRY = 0

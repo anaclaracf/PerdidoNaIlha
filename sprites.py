@@ -39,6 +39,7 @@ class Player(pg.sprite.Sprite):
         self.damage = 10
         self.tabuas = 0
         self.cordas = 0
+        self.weapon = 0
         
     def get_keys(self):
         self.vel = vec(0,0)
@@ -202,6 +203,7 @@ class canibais(pg.sprite.Sprite):
         self.rot = 0
         self.damage = 5
         self.health = 30
+        self.weapon = 0
         
     def update(self):
         self.rot= (self.game.player.pos - self.pos).angle_to(vec(1,0))

@@ -55,6 +55,7 @@ class game_intro:
 			
 			largeText = pg.font.Font(font_name2,115)
 			TextSurf, TextRect = text_objects("ESCAPE THE ISLAND", largeText)
+			#TextSurf, TextRect = text_objects((40,350),"press space to continue", largeText)
 			
 			TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2))
 			gameDisplay.blit(TextSurf, TextRect)
@@ -134,8 +135,9 @@ class Game:
             self.update()
             self.draw()
             self.win()
-            #self.dia+=1
-
+            self.check_damage()
+            self.dia+=1
+            self.morte()
     def quit(self):
         pg.quit()
         sys.exit()
@@ -149,12 +151,29 @@ class Game:
 
                time.sleep(4)
                self.quit()
-               
+              
+    def check_damage(self):
+        if self.dia%60==0:
+            if self.inimigo.health>0:
+                if self.player.pos.x - self.inimigo.pos.x<=50 and self.player.pos.x - self.inimigo.pos.x>=-50:
+                    if self.player.pos.y - self.inimigo.pos.y <=50 and self.player.pos.y - self.inimigo.pos.y>=-50:
+                        self.player.health-=self.inimigo.damage
+    
     def update(self):
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
 
+    def morte(self):
+        if self.player.energy <= 0:
+            pg.quit()
+            sys.exit()
+        if self.player.hungry >= 100:
+            pg.quit()
+            sys.exit()
+        if self.player.health<=0:
+            pg.quit()
+            sys.exit()
     def draw_grid(self):
         for x in range(0, settings.WIDTH, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (x, 0), (x, settings.HEIGHT))
@@ -269,12 +288,6 @@ class Game:
                     
                 print("Fome={0}".format(self.player.hungry))
                 print("Energia={0}".format(self.player.energy))
-            if self.player.energy <= 0:
-                pg.quit()
-                sys.exit()
-            if self.player.hungry >= 100:
-                pg.quit()
-                sys.exit()
 
     def show_start_screen(self):
         pass
