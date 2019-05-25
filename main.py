@@ -110,6 +110,7 @@ class Game:
         self.madeira = sprites.wood(self,random.randrange(0,800),random.randrange(0,800))
         self.cordas_classe = sprites.rope (self,random.randrange(0,800),random.randrange(0,800))
         self.inimigo = pg.sprite.Group()
+        self.inimigos=[]
         self.comidas=[]
         for i in range(10):    
             self.comidas.append(sprites.food(self,random.randrange(0,500),random.randrange(0,500),4))
@@ -126,7 +127,7 @@ class Game:
                     self.bed = sprites.Bed(self,col,row)
                 if tile == 'e':
                     self.inimigo = sprites.canibais(self,col,row)
-                    
+                    self.inimigos.append(self.inimigo)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -157,10 +158,11 @@ class Game:
               
     def check_damage(self):
         if self.dia%60==0:
-            if self.inimigo.health>0:
-                if self.player.pos.x - self.inimigo.pos.x<=50 and self.player.pos.x - self.inimigo.pos.x>=-50:
-                    if self.player.pos.y - self.inimigo.pos.y <=50 and self.player.pos.y - self.inimigo.pos.y>=-50:
-                        self.player.health-=self.inimigo.damage
+            for sprite in self.inimigos:
+                if sprite.health>0:
+                    if self.player.pos.x - sprite.pos.x<=50 and self.player.pos.x - sprite.pos.x>=-50:
+                        if self.player.pos.y - sprite.pos.y <=50 and self.player.pos.y - sprite.pos.y>=-50:
+                            self.player.health-=sprite.damage
     
     def update(self):
         # update portion of the game loop
@@ -207,12 +209,12 @@ class Game:
         self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
         if self.player.tabuas==5 and self.player.cordas==3:    
             self.draw_text(str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
-        
-        if self.inimigo.health>0:
-            if self.player.pos.x - self.inimigo.pos.x<=400 and self.player.pos.x - self.inimigo.pos.x>=-400:
-                if self.player.pos.y - self.inimigo.pos.y <=400 and self.player.pos.y - self.inimigo.pos.y>=-400:
-                    self.draw_text(str('Vida do inimigo:{0}'.format(self.inimigo.health)),18,settings.WIDTH-70,settings.HEIGHT/2)
-                    self.inimigo.persecution()
+        for sprite in self.inimigos:
+            if sprite.health>0:
+                if self.player.pos.x - sprite.pos.x<=400 and self.player.pos.x - sprite.pos.x>=-400:
+                    if self.player.pos.y - sprite.pos.y <=400 and self.player.pos.y - sprite.pos.y>=-400:
+                        self.draw_text(str('Vida do inimigo:{0}'.format(sprite.health)),18,settings.WIDTH-70,settings.HEIGHT/2)
+                        sprite.persecution()
         pg.display.flip()
         #if self.dia==300:
             #self.screen.fill(settings.BLACK)
@@ -280,11 +282,11 @@ class Game:
                             random_y = random.randrange(0,500)
                             if self.player.cordas<3:
                                 self.cordas_classe = sprites.rope(self,random_x,random_y)
-                    if self.player.pos.x - self.inimigo.pos.x<=50 and self.player.pos.x - self.inimigo.pos.x>=-50:
-                        if self.player.pos.y - self.inimigo.pos.y <=50 and self.player.pos.y - self.inimigo.pos.y>=-50:
-                            self.player.health-=self.inimigo.damage
-                            self.inimigo.health-=self.player.damage
-                            self.inimigo.die()
+                    for sprite in self.inimigos:
+                        if self.player.pos.x - sprite.pos.x<=50 and self.player.pos.x - sprite.pos.x>=-50:
+                            if self.player.pos.y - sprite.pos.y <=50 and self.player.pos.y - sprite.pos.y>=-50:
+                                sprite.health-=self.player.damage
+                                sprite.die()
                             
                                 
                                 
