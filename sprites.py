@@ -138,9 +138,10 @@ class food (pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
-        self.image = pg.Surface ((settings.TILESIZE,settings.TILESIZE))
+        self.image = game.comida_img
+        self.image.set_colorkey (settings.WHITE)
+        self.image = pg.transform.scale(self.image,(50,40))
         self.rect = self.image.get_rect()
-        self.image.fill(settings.RED)
         self.x = x #* settings.TILESIZE
         self.y = y #* settings.TILESIZE
         self.rect.x = x #* settings.TILESIZE
@@ -155,9 +156,10 @@ class wood (pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
-        self.image = pg.Surface ((settings.TILESIZE,settings.TILESIZE))
+        self.image = game.madeira_img
         self.rect = self.image.get_rect()
-        self.image.fill(settings.GREEN)
+        self.image = pg.transform.scale(self.image,(50,40))
+        self.image.set_colorkey(settings.WHITE)
         self.x = x #* settings.TILESIZE
         self.y = y #* settings.TILESIZE
         self.rect.x = x #* settings.TILESIZE
@@ -171,9 +173,10 @@ class rope (pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
-        self.image = pg.Surface ((settings.TILESIZE,settings.TILESIZE))
+        self.image = game.corda_img
+        self.image.set_colorkey(settings.WHITE)
+        self.image = pg.transform.scale(self.image,(50,40))
         self.rect = self.image.get_rect()
-        self.image.fill(settings.LIGHTGREY)
         self.x = x #* settings.TILESIZE
         self.y = y #* settings.TILESIZE
         self.rect.x = x #* settings.TILESIZE

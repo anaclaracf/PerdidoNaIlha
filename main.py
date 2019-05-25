@@ -96,6 +96,9 @@ class Game:
         img_folder = path.join(game_folder, 'img')
         self.map = tilemap.Map(path.join(game_folder, 'map2.txt'))
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
+        self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
+        self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
+        self.comida_img = pg.image.load(path.join(img_folder,settings.COMIDA_IMG)).convert_alpha()
 
     def new(self):
         # initialize all variables and do all the setup for a new game

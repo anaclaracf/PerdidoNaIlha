@@ -42,9 +42,14 @@ PLAYER_IMG = 'manBlue_gun.png'
 
 #Food settings
 FOOD_NUTRI = 20
-
-CERCA_IMG = 'cerca.png'
+COMIDA_IMG = 'pizza.png'
 
 #Monstro
 MOB_SPEED = 150
 MOB_HIT_RECT = pg.Rect(0,0,30,30)
+
+#Madeira
+MADEIRA_IMG='madeira.png'
+
+#Corda
+CORDA_IMG='corda1.png'
