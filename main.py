@@ -93,7 +93,9 @@ class Game:
 
     def load_data(self):
         game_folder = path.dirname(__file__)
+        snd_folder = path.join(game_folder,'snd')
         img_folder = path.join(game_folder, 'img')
+        self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
         self.map = tilemap.Map(path.join(game_folder, 'map2.txt'))
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
         self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
@@ -102,6 +104,7 @@ class Game:
 
     def new(self):
         # initialize all variables and do all the setup for a new game
+        self.snd_background.play()
         self.dia=0
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
