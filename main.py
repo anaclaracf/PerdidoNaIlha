@@ -182,11 +182,13 @@ class Game:
         if self.player.health<=0:
             pg.quit()
             sys.exit()
+            
     def draw_grid(self):
         for x in range(0, settings.WIDTH, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (x, 0), (x, settings.HEIGHT))
         for y in range(0, settings.HEIGHT, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (0, y), (settings.WIDTH, y))
+    
     def draw_text(self,text,size,x,y):
         font=pg.font.Font(font_name,size)
         text_surface=font.render(text,True,settings.WHITE)
