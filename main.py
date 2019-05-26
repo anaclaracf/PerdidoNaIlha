@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri May 17 14:16:22 2019
-
 @author: beatrizcf
 """
 
@@ -17,10 +16,10 @@ import time
 img_dir = path.join(path.dirname(__file__), 'img')
 
 font_name=pg.font.match_font('arial')
-font_name2=pg.font.match_font('Gameplay')
+font_name2=pg.font.match_font('Felix Titling')
 
 gameDisplay = pg.display.set_mode((settings.WIDTH,settings.HEIGHT))
-pg.display.set_caption("PERDIDO NA ILHA")
+pg.display.set_caption("ESCAPE THE ISLAND")
 clock = pg.time.Clock()
  
 def text_objects(text, font):
@@ -38,42 +37,37 @@ def message_display(text,pg):
 
                             
 class game_intro:
-	def __init__(self,game):
-		pg.init()
-		intro = True
-		while intro:
-			clock.tick(15)
-			for event in pg.event.get():
-				if event.type == pg.QUIT:
-					pg.quit()
-					sys.exit()
-				if event.type ==pg.KEYDOWN:
-					if event.key==pg.K_SPACE:
-						intro=False
-			background= pg.image.load(path.join(img_dir, "fundo2.png")).convert()
-			gameDisplay.blit(background, background.get_rect())
-			
-			largeText = pg.font.Font(font_name2,115)
-			TextSurf, TextRect = text_objects("ESCAPE THE ISLAND", largeText)
-			#TextSurf, TextRect = text_objects((40,350),"press space to continue", largeText)
-			
-			TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2))
-			gameDisplay.blit(TextSurf, TextRect)
-			
-			smallText = pg.font.Font(font_name,40)
-			TextSurf, TextRect = text_objects("press space to play", smallText)
-			TextRect.center = ((settings.WIDTH/2),(settings.HEIGHT/2 + 100))
-			gameDisplay.blit(TextSurf, TextRect)
-
-			
-			pg.display.update()
-			
-		g = Game()
-		g.show_start_screen()
-		while True:
-			g.new()
-			g.run()   
-			g.show_go_screen()
+    def __init__(self,game):
+        pg.init()
+        intro = True
+        while intro:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+                if event.type ==pg.KEYDOWN:
+                    if event.key==pg.K_SPACE:
+                        intro=False
+            background= pg.image.load(path.join(img_dir, "fundo2.png")).convert()
+            gameDisplay.blit(background, background.get_rect())
+            
+            pg.display.update()
+        
+        background = pg.image.load(path.join(img_dir,"apresentaçao.png")).convert()
+        gameDisplay.blit(background, background.get_rect())
+        pg.display.update()
+        time.sleep(8)
+        background = pg.image.load(path.join(img_dir,"como jogar.png")).convert()
+        gameDisplay.blit(background, background.get_rect())
+        pg.display.update()
+        time.sleep(5) 
+		  
+        g = Game()
+        g.show_start_screen()
+        while True:
+            g.new()
+            g.run()   
+            g.show_go_screen()
 
 def draw_text(surf,text,size,x,y):
     font=pg.font.Font(font_name,size)
@@ -101,6 +95,7 @@ class Game:
         self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
         self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
         self.comida_img = pg.image.load(path.join(img_folder,settings.COMIDA_IMG)).convert_alpha()
+        self.cama_img = pg.image.load(path.join(img_folder,settings.CAMA_IMG)).convert_alpha()
 
     def new(self):
         # initialize all variables and do all the setup for a new game
@@ -151,13 +146,31 @@ class Game:
 
     def win (self):
        if self.player.tabuas == 5 and self.player.cordas==3:
-               background = pg.image.load(path.join(img_dir, "youwin.png")).convert()
-               gameDisplay.blit(background, background.get_rect())
-			   
-               pg.display.update()
+            background = pg.image.load(path.join(img_dir, "final.png")).convert()
+            gameDisplay.blit(background, background.get_rect())               
+            pg.display.update()
+            time.sleep(2)
+            pg.init()
+            intro = True
+            while intro:
+                clock.tick(15)
+                for event in pg.event.get():
+                     if event.type == pg.QUIT:
+                         pg.quit()
+                         sys.exit()
+                     if event.type ==pg.KEYDOWN:
+                         if event.key==pg.K_SPACE:
+                             intro=False
+                background= pg.image.load(path.join(img_dir, "fundo2.png")).convert()
+                gameDisplay.blit(background, background.get_rect())
 
-               time.sleep(4)
-               self.quit()
+                pg.display.update()
+            
+            g = Game()
+            g.show_start_screen()
+            while True:
+                g.new()
+                g.run()
               
     def check_damage(self):
         if self.dia%60==0:
@@ -172,6 +185,7 @@ class Game:
         self.all_sprites.update()
         self.camera.update(self.player)
 
+<<<<<<< HEAD
     def morte(self):
         if self.player.energy <= 0:
             pg.quit()
@@ -183,6 +197,37 @@ class Game:
             pg.quit()
             sys.exit()
             
+=======
+    def morte(self):        
+        if self.player.energy <= 0 or self.player.hungry >= 100 or self.player.health<=0 :
+            background=pg.image.load(path.join(img_dir, "game over.png")).convert()
+            gameDisplay.blit(background, background.get_rect())
+            pg.display.update()
+            time.sleep(2)
+            pg.init()
+            intro = True
+            while intro:
+                clock.tick(15)
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                         pg.quit()
+                         sys.exit()
+                    if event.type ==pg.KEYDOWN:
+                        if event.key==pg.K_SPACE:
+                            intro=False
+                background= pg.image.load(path.join(img_dir, "fundo2.png")).convert()
+                gameDisplay.blit(background, background.get_rect())
+
+                pg.display.update()
+            
+            g = Game()
+            g.show_start_screen()
+            while True:
+                g.new()
+                g.run()   
+                g.show_go_screen()         
+
+>>>>>>> cb091f9476c4cdc6b91f42867db985678ef67614
     def draw_grid(self):
         for x in range(0, settings.WIDTH, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (x, 0), (x, settings.HEIGHT))
@@ -211,7 +256,7 @@ class Game:
         self.draw_text(str('Madeiras:{0}'.format(self.player.tabuas)),18,settings.WIDTH-70,10)
         self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
         self.draw_text(str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
-        self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
+        self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
         if self.player.tabuas==5 and self.player.cordas==3:    
             self.draw_text(str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
         for sprite in self.inimigos:

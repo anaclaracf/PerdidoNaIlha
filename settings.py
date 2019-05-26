@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri May 17 14:19:13 2019
-
 @author: beatrizcf
 """
 import pygame as pg
@@ -22,7 +21,7 @@ YELLOW = (255, 255, 0)
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
 HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
 FPS = 60
-TITLE = "Scape the Island"
+TITLE = "Escape the Island"
 BGCOLOR = DARKGREY
 
 TILESIZE = 32
