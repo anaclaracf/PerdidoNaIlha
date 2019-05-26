@@ -41,7 +41,6 @@ class game_intro:
         pg.init()
         intro = True
         while intro:
-            clock.tick(15)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
@@ -53,7 +52,16 @@ class game_intro:
             gameDisplay.blit(background, background.get_rect())
             
             pg.display.update()
-            
+        
+        background = pg.image.load(path.join(img_dir,"apresentaçao.png")).convert()
+        gameDisplay.blit(background, background.get_rect())
+        pg.display.update()
+        time.sleep(8)
+        background = pg.image.load(path.join(img_dir,"como jogar.png")).convert()
+        gameDisplay.blit(background, background.get_rect())
+        pg.display.update()
+        time.sleep(5) 
+		  
         g = Game()
         g.show_start_screen()
         while True:
@@ -87,6 +95,7 @@ class Game:
         self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
         self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
         self.comida_img = pg.image.load(path.join(img_folder,settings.COMIDA_IMG)).convert_alpha()
+        self.cama_img = pg.image.load(path.join(img_folder,settings.CAMA_IMG)).convert_alpha()
 
     def new(self):
         # initialize all variables and do all the setup for a new game
@@ -232,7 +241,7 @@ class Game:
         self.draw_text(str('Madeiras:{0}'.format(self.player.tabuas)),18,settings.WIDTH-70,10)
         self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
         self.draw_text(str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
-        self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,150,settings.HEIGHT-60)
+        self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
         if self.player.tabuas==5 and self.player.cordas==3:    
             self.draw_text(str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
         for sprite in self.inimigos:
