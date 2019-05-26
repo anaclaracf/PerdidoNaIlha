@@ -185,7 +185,6 @@ class Game:
         self.all_sprites.update()
         self.camera.update(self.player)
 
-<<<<<<< HEAD
     def morte(self):
         if self.player.energy <= 0:
             pg.quit()
@@ -197,7 +196,6 @@ class Game:
             pg.quit()
             sys.exit()
             
-=======
     def morte(self):        
         if self.player.energy <= 0 or self.player.hungry >= 100 or self.player.health<=0 :
             background=pg.image.load(path.join(img_dir, "game over.png")).convert()
@@ -227,7 +225,6 @@ class Game:
                 g.run()   
                 g.show_go_screen()         
 
->>>>>>> cb091f9476c4cdc6b91f42867db985678ef67614
     def draw_grid(self):
         for x in range(0, settings.WIDTH, settings.TILESIZE):
             pg.draw.line(self.screen, settings.LIGHTGREY, (x, 0), (x, settings.HEIGHT))

@@ -52,3 +52,6 @@ MADEIRA_IMG='madeira.png'
 
 #Corda
 CORDA_IMG='corda1.png'
+
+#Cama
+CAMA_IMG='bed.png'
