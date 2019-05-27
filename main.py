@@ -13,6 +13,7 @@ import sprites
 import tilemap
 import random
 import time
+
 img_dir = path.join(path.dirname(__file__), 'img')
 
 font_name=pg.font.match_font('arial')
@@ -89,8 +90,11 @@ class Game:
         game_folder = path.dirname(__file__)
         snd_folder = path.join(game_folder,'snd')
         img_folder = path.join(game_folder, 'img')
+        map_folder = path.join(game_folder, 'map')
         self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
-        self.map = tilemap.Map(path.join(game_folder, 'map2.txt'))
+        self.map = tilemap.TiledMap(path.join(map_folder, 'testando.tmx'))
+        self.map_img = self.map.Makemap() 
+        self.map_rect = self.map_img.get_rect()
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
         self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
         self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
@@ -114,18 +118,19 @@ class Game:
             self.comidas.append(sprites.food(self,random.randrange(0,500),random.randrange(0,500),4))
             self.all_sprites.add(self.comidas[i])
             self.comida.add(self.comidas[i])
-        for row, tiles in enumerate(self.map.data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    sprites.Wall(self, col, row)
-                if tile == 'P':
-                    self.player = sprites.Player(self, col, row)
-                    self.all_sprites.add(self.player)
-                if tile == 'b':
-                    self.bed = sprites.Bed(self,col,row)
-                if tile == 'e':
-                    self.inimigo = sprites.canibais(self,col,row)
-                    self.inimigos.append(self.inimigo)
+        #for row, tiles in enumerate(self.map.data):
+         #   for col, tile in enumerate(tiles):
+          #      if tile == '1':
+           #         sprites.Wall(self, col, row)
+            #    if tile == 'P':
+             #       self.player = sprites.Player(self, col, row)
+               #     self.all_sprites.add(self.player)
+              #  if tile == 'b':
+                #    self.bed = sprites.Bed(self,col,row)
+                #if tile == 'e':
+                 #   self.inimigo = sprites.canibais(self,col,row)
+                  #  self.inimigos.append(self.inimigo)
+        self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -239,8 +244,9 @@ class Game:
         self.screen.blit(text_surface, text_rect)
 
     def draw(self):
-        self.screen.fill(settings.BGCOLOR)
-        self.draw_grid()
+        #self.screen.fill(settings.BGCOLOR)
+        #self.draw_grid()
+        self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
         for sprite in self.all_sprites:
             if isinstance(sprite,sprites.Player):
                 sprite.draw_life()
