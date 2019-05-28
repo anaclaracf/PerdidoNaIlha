@@ -93,7 +93,7 @@ class Game:
         img_folder = path.join(game_folder, 'img')
         map_folder = path.join(game_folder, 'map')
         self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
-        self.map = tilemap.TiledMap(path.join(map_folder, 'mapa teste.tmx'))
+        self.map = tilemap.TiledMap(path.join(map_folder, 'mapapoke.tmx'))
         self.map_img = self.map.Makemap() 
         self.map_rect = self.map_img.get_rect()
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()

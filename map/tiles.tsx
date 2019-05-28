@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.4" name="poke" tilewidth="16" tileheight="16" tilecount="20832" columns="16">
- <image source="../../Map/pokemon tileset.png" width="256" height="20832"/>
+ <image source="pokemon tileset.png" width="256" height="20832"/>
  <terraintypes>
   <terrain name="New Terrain" tile="2545"/>
   <terrain name="elevado" tile="5027"/>
