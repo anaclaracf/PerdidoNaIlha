@@ -58,11 +58,11 @@ class game_intro:
         background = pg.image.load(path.join(img_dir,"apresentaçao.png")).convert()
         gameDisplay.blit(background, background.get_rect())
         pg.display.update()
-        time.sleep(8)
+        time.sleep(3)
         background = pg.image.load(path.join(img_dir,"como jogar.png")).convert()
         gameDisplay.blit(background, background.get_rect())
         pg.display.update()
-        time.sleep(5) 
+        time.sleep(3) 
 		  
         g = Game()
         g.show_start_screen()
@@ -93,7 +93,7 @@ class Game:
         img_folder = path.join(game_folder, 'img')
         map_folder = path.join(game_folder, 'map')
         self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
-        self.map = tilemap.TiledMap(path.join(map_folder, 'testando.tmx'))
+        self.map = tilemap.TiledMap(path.join(map_folder, 'mapa teste.tmx'))
         self.map_img = self.map.Makemap() 
         self.map_rect = self.map_img.get_rect()
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
@@ -120,17 +120,17 @@ class Game:
             self.all_sprites.add(self.comidas[i])
             self.comida.add(self.comidas[i])
         #for row, tiles in enumerate(self.map.data):
-         #   for col, tile in enumerate(tiles):
-          #      if tile == '1':
-           #         sprites.Wall(self, col, row)
-            #    if tile == 'P':
-             #       self.player = sprites.Player(self, col, row)
-               #     self.all_sprites.add(self.player)
-              #  if tile == 'b':
-                #    self.bed = sprites.Bed(self,col,row)
+            #for col, tile in enumerate(tiles):
+                #if tile == '1':
+                    #sprites.Wall(self, col, row)
+                #if tile == 'P':
+                    #self.player = sprites.Player(self, col, row)
+                    #self.all_sprites.add(self.player)
+                #if tile == 'b':
+                    #self.bed = sprites.Bed(self,col,row)
                 #if tile == 'e':
-                 #   self.inimigo = sprites.canibais(self,col,row)
-                  #  self.inimigos.append(self.inimigo)
+                    #self.inimigo = sprites.canibais(self,col,row)
+                    #self.inimigos.append(self.inimigo)
         for tile_object in self.map.tmxdata.objects:
             if tile_object == 'player':
                 self.player = sprites.Player(self,tile_object.x, tile_object.y)
@@ -140,8 +140,8 @@ class Game:
                 self.food = sprites.Food(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
             if tile_object == 'cotoco':
                 self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            
-        #self.player = sprites.Player(self,5,5)
+        
+        self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -313,12 +313,12 @@ class Game:
                     self.player.hungry+=1
                 if event.key == pg.K_SPACE:
                     #print(self.player.x - self.inimigo.x)
-                    if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:
-                        if self.player.pos.y - self.bed.y <=50 and self.player.pos.y - self.bed.y>=-50:
-                            self.player.pos.x=self.bed.x   ###
-                            self.player.pos.y=self.bed.y
-                            self.bed.recharge(self.player)
-                            self.player.tired=0
+                    #if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:
+                        #if self.player.pos.y - self.bed.y <=50 and self.player.pos.y - self.bed.y>=-50:
+                            #self.player.pos.x=self.bed.x   ###
+                            #self.player.pos.y=self.bed.y
+                            #self.bed.recharge(self.player)
+                            #self.player.tired=0
                     for i in self.comidas:
                         if self.player.pos.x - i.x<=50 and self.player.pos.x - i.x>=-50:
                             if self.player.pos.y - i.y <=50 and self.player.pos.y - i.y>=-50:

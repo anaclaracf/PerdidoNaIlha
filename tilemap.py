@@ -5,7 +5,7 @@ Created on Fri May 17 14:20:45 2019
 
 @author: beatrizcf
 """
-
+import pytmx
 import pygame as pg
 import settings
 import pytmx
@@ -45,6 +45,7 @@ class TiledMap:
         self.render(temp_surface)
         return temp_surface
 
+    
 class Camera:
     def __init__(self, width, height):
         self.camera = pg.Rect(0, 0, width, height)
@@ -53,6 +54,7 @@ class Camera:
 
     def apply(self, entity):
         return entity.rect.move(self.camera.topleft)
+
     def apply_rect(self, rect):
        return rect.move(self.camera.topleft)
 
