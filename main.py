@@ -130,6 +130,16 @@ class Game:
                 #if tile == 'e':
                  #   self.inimigo = sprites.canibais(self,col,row)
                   #  self.inimigos.append(self.inimigo)
+        for tile_object in self.map.tmxdata.objects:
+            if tile_object == 'player':
+                self.player = sprites.Player(self,tile_object.x, tile_object.y)
+            if tile_object == 'madeira':
+                self.madeira = sprites.Wall(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object == 'comida':
+                self.food = sprites.Food(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object == 'cotoco':
+                self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            
         self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 

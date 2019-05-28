@@ -18,13 +18,13 @@ BRIGHT_RED = (200, 0, 0)
 YELLOW = (255, 255, 0)
 
 # game settings
-WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
-HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
+WIDTH = 800   # 16 * 64 or 32 * 32 or 64 * 16
+HEIGHT = 480  # 16 * 48 or 32 * 24 or 64 * 12
 FPS = 60
 TITLE = "Escape the Island"
 BGCOLOR = DARKGREY
 
-TILESIZE = 32
+TILESIZE = 16
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
