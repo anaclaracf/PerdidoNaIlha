@@ -4,6 +4,7 @@
 Created on Fri May 17 14:16:22 2019
 @author: beatrizcf
 """
+#
 
 import pygame as pg
 import sys
@@ -140,7 +141,7 @@ class Game:
             if tile_object == 'cotoco':
                 self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
             
-        self.player = sprites.Player(self,5,5)
+        #self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -329,6 +330,14 @@ class Game:
                                     self.comidas.append(sprites.food(self,random_x,random_y,4)) 
                                     if self.player.hungry<0:
                                         self.player.hungry=0
+#                    if self.player.pos.x - self.madeira.x<=50 and self.player.pos.x - self.madeira.x>=-50:
+#                        if self.player.pos.y - self.madeira.y <=50 and self.player.pos.y - self.madeira.y>=-50:
+#                            self.player.tabuas+=1
+#                            self.madeira.gotten()
+#                            random_x = random.randrange(0,500)
+#                            random_y = random.randrange(0,500)
+#                            if self.player.tabuas<5:
+#                                self.madeira = sprites.wood(self,random_x,random_y)
                     if self.player.pos.x - self.madeira.x<=50 and self.player.pos.x - self.madeira.x>=-50:
                         if self.player.pos.y - self.madeira.y <=50 and self.player.pos.y - self.madeira.y>=-50:
                             self.player.tabuas+=1
