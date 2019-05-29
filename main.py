@@ -141,7 +141,6 @@ class Game:
                 self.comida= sprites.food(self,tile_object.x,tile_object.y,4)
                 self.comidas.append(self.comida)
                 self.all_sprites.add(self.comida)
-                i+=1
             if tile_object.name == 'Rio':
                 self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
             if tile_object.name == 'Indio':
