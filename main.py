@@ -284,16 +284,17 @@ class Game:
                     self.quit()
                 #Movimentação                    
                 if event.key == pg.K_LEFT:
-                    self.player.tired+=1
+                    self.player.tired+=10
                 if event.key == pg.K_RIGHT:
-                    self.player.tired+=1                   
+                    self.player.tired+=10                   
                 if event.key == pg.K_UP:
-                    self.player.tired+=1
+                    self.player.tired+=10
                 if event.key == pg.K_DOWN:
-                    self.player.tired+=1
-                if self.player.tired%10==0 and self.player.tired!=0:
+                    self.player.tired+=10
+                if self.player.tired>10:
                     self.player.energy-=1
                     self.player.hungry+=1
+                    self.player.tired=0
                 if event.key == pg.K_SPACE:
                     #print(self.player.x - self.inimigo.x)
                     if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:
