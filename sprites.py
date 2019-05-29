@@ -177,9 +177,11 @@ class wood (pg.sprite.Sprite):
         self.y = y #* settings.TILESIZE
         self.rect.x = x #* settings.TILESIZE
         self.rect.y = y #* settings.TILESIZE
+        self.quantidade=1
         
     def gotten (self):
         self.kill()
+        self.quantidade=0
         
 class rope (pg.sprite.Sprite):
     def __init__ (self,game,x,y):
@@ -194,9 +196,11 @@ class rope (pg.sprite.Sprite):
         self.y = y #* settings.TILESIZE
         self.rect.x = x #* settings.TILESIZE
         self.rect.y = y #* settings.TILESIZE
+        self.quantidade=1
         
     def gotten (self):
         self.kill()
+        self.quantidade=0
     
 class canibais(pg.sprite.Sprite):
     def __init__(self,game,x,y):
@@ -205,7 +209,7 @@ class canibais(pg.sprite.Sprite):
         self.game = game
         self.image = game.inimigo_img
         self.image.set_colorkey(settings.WHITE)
-        self.image = pg.transform.scale(self.image,(50,40))
+        self.image = pg.transform.scale(self.image,(30,20))
         self.rect = self.image.get_rect()
         self.pos= vec(x,y)
         self.hit_rect = settings.MOB_HIT_RECT

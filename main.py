@@ -93,11 +93,7 @@ class Game:
         img_folder = path.join(game_folder, 'img')
         map_folder = path.join(game_folder, 'map')
         self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
-<<<<<<< HEAD
-        self.map = tilemap.TiledMap(path.join(map_folder, 'mapa_teste.tmx'))
-=======
         self.map = tilemap.TiledMap(path.join(map_folder, 'mapapoke.tmx'))
->>>>>>> cbc2057d7c67d8d428a187af1aab35bb4db749b3
         self.map_img = self.map.Makemap() 
         self.map_rect = self.map_img.get_rect()
         self.inimigo_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
@@ -115,8 +111,12 @@ class Game:
         self.walls = pg.sprite.Group()
         self.bed = pg.sprite.Group()
         self.comida = pg.sprite.Group()
-        self.madeira = sprites.wood(self,random.randrange(0,800),random.randrange(0,800))
-        self.cordas_classe = sprites.rope (self,random.randrange(0,800),random.randrange(0,800))
+        #self.madeira = sprites.wood(self,random.randrange(0,800),random.randrange(0,800))
+        #self.cordas_classe = sprites.rope (self,random.randrange(0,800),random.randrange(0,800))
+        self.cordas=[]
+        self.corda=pg.sprite.Group()
+        self.madeiras=[]
+        self.madeira=pg.sprite.Group()
         self.inimigo = pg.sprite.Group()
         self.inimigos=[]
         self.comidas=[]
@@ -140,7 +140,9 @@ class Game:
             if tile_object.name == 'player':
                 self.player = sprites.Player(self,tile_object.x, tile_object.y)
             if tile_object.name == 'madeira':
-                self.madeira = sprites.Wall(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+                self.madeira = sprites.wood(self,tile_object.x, tile_object.y)
+                self.madeiras.append(self.madeira)
+                self.all_sprites.add(self.madeira)
             if tile_object.name == 'comida':
                 self.comida= sprites.food(self,tile_object.x,tile_object.y,4)
                 self.comidas.append(self.comida)
@@ -151,7 +153,10 @@ class Game:
                 self.inimigo = sprites.canibais(self,tile_object.x, tile_object.y)
                 self.inimigos.append(self.inimigo)
                 self.all_sprites.add(self.inimigo)
-        
+            if tile_object.name == 'corda':
+                self.corda = sprites.rope(self,tile_object.x, tile_object.y)
+                self.cordas.append(self.corda)
+                self.all_sprites.add(self.corda)
         #self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
@@ -172,7 +177,7 @@ class Game:
         sys.exit()
 
     def win (self):
-       if self.player.tabuas == 5 and self.player.cordas==3:
+       if self.player.tabuas >= 5 and self.player.cordas>=3:
             background = pg.image.load(path.join(img_dir, "final.png")).convert()
             gameDisplay.blit(background, background.get_rect())               
             pg.display.update()
@@ -211,17 +216,6 @@ class Game:
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
-
-    def morte(self):
-        if self.player.energy <= 0:
-            pg.quit()
-            sys.exit()
-        if self.player.hungry >= 100:
-            pg.quit()
-            sys.exit()
-        if self.player.health<=0:
-            pg.quit()
-            sys.exit()
             
     def morte(self):        
         if self.player.energy <= 0 or self.player.hungry >= 100 or self.player.health<=0 :
@@ -282,8 +276,6 @@ class Game:
         self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
         self.draw_text(str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
         self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
-        if self.player.tabuas==5 and self.player.cordas==3:    
-            self.draw_text(str('Você Ganhou'),70,settings.WIDTH/2,settings.HEIGHT/2)
         for sprite in self.inimigos:
             if sprite.health>0:
                 if self.player.pos.x - sprite.pos.x<=400 and self.player.pos.x - sprite.pos.x>=-400:
@@ -352,22 +344,24 @@ class Game:
 #                            random_y = random.randrange(0,500)
 #                            if self.player.tabuas<5:
 #                                self.madeira = sprites.wood(self,random_x,random_y)
-                    if self.player.pos.x - self.madeira.x<=50 and self.player.pos.x - self.madeira.x>=-50:
-                        if self.player.pos.y - self.madeira.y <=50 and self.player.pos.y - self.madeira.y>=-50:
-                            self.player.tabuas+=1
-                            self.madeira.gotten()
-                            random_x = random.randrange(0,500)
-                            random_y = random.randrange(0,500)
-                            if self.player.tabuas<5:
-                                self.madeira = sprites.wood(self,random_x,random_y)
-                    if self.player.pos.x - self.cordas_classe.x<=50 and self.player.pos.x - self.cordas_classe.x>=-50:
-                        if self.player.pos.y - self.cordas_classe.y <=50 and self.player.pos.y - self.cordas_classe.y>=-50:
-                            self.player.cordas+=1
-                            self.cordas_classe.gotten()
-                            random_x = random.randrange(0,500)
-                            random_y = random.randrange(0,500)
-                            if self.player.cordas<3:
-                                self.cordas_classe = sprites.rope(self,random_x,random_y)
+                    for sprite in self.madeiras:
+                        if self.player.pos.x - sprite.x<=50 and self.player.pos.x - sprite.x>=-50:
+                            if self.player.pos.y - sprite.y <=50 and self.player.pos.y - sprite.y>=-50:
+                                self.player.tabuas+=sprite.quantidade
+                                sprite.gotten()
+                                random_x = random.randrange(0,500)
+                                random_y = random.randrange(0,500)
+                            #if self.player.tabuas<5:
+                                #self.madeira = sprites.wood(self,random_x,random_y)
+                    for sprite in self.cordas:
+                        if self.player.pos.x - sprite.x<=50 and self.player.pos.x - sprite.x>=-50:
+                            if self.player.pos.y - sprite.y <=50 and self.player.pos.y - sprite.y>=-50:
+                                self.player.cordas+=sprite.quantidade
+                                sprite.gotten()
+                                random_x = random.randrange(0,500)
+                                random_y = random.randrange(0,500)
+                            #if self.player.cordas<3:
+                                #self.cordas_classe = sprites.rope(self,random_x,random_y)
                     for sprite in self.inimigos:
                         if self.player.pos.x - sprite.pos.x<=50 and self.player.pos.x - sprite.pos.x>=-50:
                             if self.player.pos.y - sprite.pos.y <=50 and self.player.pos.y - sprite.pos.y>=-50:
