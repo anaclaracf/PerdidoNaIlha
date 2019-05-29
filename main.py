@@ -93,9 +93,14 @@ class Game:
         img_folder = path.join(game_folder, 'img')
         map_folder = path.join(game_folder, 'map')
         self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
+<<<<<<< HEAD
         self.map = tilemap.TiledMap(path.join(map_folder, 'mapa_teste.tmx'))
+=======
+        self.map = tilemap.TiledMap(path.join(map_folder, 'mapapoke.tmx'))
+>>>>>>> cbc2057d7c67d8d428a187af1aab35bb4db749b3
         self.map_img = self.map.Makemap() 
         self.map_rect = self.map_img.get_rect()
+        self.inimigo_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
         self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
         self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
@@ -132,16 +137,22 @@ class Game:
                     #self.inimigo = sprites.canibais(self,col,row)
                     #self.inimigos.append(self.inimigo)
         for tile_object in self.map.tmxdata.objects:
-            if tile_object == 'player':
+            if tile_object.name == 'player':
                 self.player = sprites.Player(self,tile_object.x, tile_object.y)
-            if tile_object == 'madeira':
+            if tile_object.name == 'madeira':
                 self.madeira = sprites.Wall(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            if tile_object == 'comida':
-                self.food = sprites.Food(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            if tile_object == 'cotoco':
+            if tile_object.name == 'comida':
+                self.comida= sprites.food(self,tile_object.x,tile_object.y,4)
+                self.comidas.append(self.comida)
+                self.all_sprites.add(self.comida)
+            if tile_object.name == 'Rio':
                 self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object.name == 'Indio':
+                self.inimigo = sprites.canibais(self,tile_object.x, tile_object.y)
+                self.inimigos.append(self.inimigo)
+                self.all_sprites.add(self.inimigo)
         
-        self.player = sprites.Player(self,5,5)
+        #self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -297,20 +308,23 @@ class Game:
                 self.quit()
                 
             if event.type == pg.KEYDOWN:
+                for sprite in self.inimigos:
+                    print (self.player.pos.x - sprite.pos.x)
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 #Movimentação                    
                 if event.key == pg.K_LEFT:
-                    self.player.tired+=1
+                    self.player.tired+=10
                 if event.key == pg.K_RIGHT:
-                    self.player.tired+=1                   
+                    self.player.tired+=10                   
                 if event.key == pg.K_UP:
-                    self.player.tired+=1
+                    self.player.tired+=10
                 if event.key == pg.K_DOWN:
-                    self.player.tired+=1
-                if self.player.tired%10==0 and self.player.tired!=0:
+                    self.player.tired+=10
+                if self.player.tired>10:
                     self.player.energy-=1
                     self.player.hungry+=1
+                    self.player.tired=0
                 if event.key == pg.K_SPACE:
                     #print(self.player.x - self.inimigo.x)
                     #if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:

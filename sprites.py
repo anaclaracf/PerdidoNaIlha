@@ -109,7 +109,7 @@ class Obstacle(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         
-        self.rect = pg.Rect(x,y,h,w)
+        self.rect = pg.Rect(x,y,w,h)
         self.x = x
         self.y = y
         self.rect.x = x 
@@ -203,10 +203,11 @@ class canibais(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
-        self.image = pg.Surface((settings.TILESIZE, settings.TILESIZE))
+        self.image = game.inimigo_img
+        self.image.set_colorkey(settings.WHITE)
+        self.image = pg.transform.scale(self.image,(50,40))
         self.rect = self.image.get_rect()
-        self.image.fill (settings.YELLOW)
-        self.pos= vec(x,y)* settings.TILESIZE
+        self.pos= vec(x,y)
         self.hit_rect = settings.MOB_HIT_RECT
         self.hit_rect.center = self.rect.center
         #self.x = x * settings.TILESIZE
