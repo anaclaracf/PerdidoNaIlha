@@ -96,6 +96,7 @@ class Game:
         self.map = tilemap.TiledMap(path.join(map_folder, 'mapapoke.tmx'))
         self.map_img = self.map.Makemap() 
         self.map_rect = self.map_img.get_rect()
+        self.inimigo_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
         self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
         self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
@@ -132,16 +133,23 @@ class Game:
                     #self.inimigo = sprites.canibais(self,col,row)
                     #self.inimigos.append(self.inimigo)
         for tile_object in self.map.tmxdata.objects:
-            if tile_object == 'player':
+            if tile_object.name == 'player':
                 self.player = sprites.Player(self,tile_object.x, tile_object.y)
-            if tile_object == 'madeira':
+            if tile_object.name == 'madeira':
                 self.madeira = sprites.Wall(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            if tile_object == 'comida':
-                self.food = sprites.Food(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            if tile_object == 'cotoco':
+            if tile_object.name == 'comida':
+                self.comida= sprites.food(self,tile_object.x,tile_object.y,4)
+                self.comidas.append(self.comida)
+                self.all_sprites.add(self.comida)
+                i+=1
+            if tile_object.name == 'Rio':
                 self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object.name == 'Indio':
+                self.inimigo = sprites.canibais(self,tile_object.x, tile_object.y)
+                self.inimigos.append(self.inimigo)
+                self.all_sprites.add(self.inimigo)
         
-        self.player = sprites.Player(self,5,5)
+        #self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -297,6 +305,8 @@ class Game:
                 self.quit()
                 
             if event.type == pg.KEYDOWN:
+                for sprite in self.inimigos:
+                    print (self.player.pos.x - sprite.pos.x)
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 #Movimentação                    

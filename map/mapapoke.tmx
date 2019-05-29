@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="300" height="180" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="300" height="180" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="66">
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="ground" width="300" height="180">
   <data encoding="csv">
@@ -2577,4 +2577,94 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="15" name="Camada de Objetos 1">
+  <object id="3" name="Rio" x="2384" y="512" width="240" height="176"/>
+  <object id="4" name="Rio" x="0" y="320" width="160" height="352"/>
+  <object id="5" name="Rio" x="160" y="400" width="1216" height="176"/>
+  <object id="6" name="Rio" x="224" y="704" width="128" height="224"/>
+  <object id="7" name="Rio" x="352" y="768" width="160" height="160"/>
+  <object id="8" name="Rio" x="1408" y="400" width="576" height="176"/>
+  <object id="10" name="Rio" x="1984" y="480" width="80" height="176"/>
+  <object id="12" name="Rio" x="2016" y="656" width="368" height="32"/>
+  <object id="13" name="Rios" x="2064" y="512" width="320" height="144"/>
+  <object id="14" name="Rio" x="2624" y="576" width="48" height="224"/>
+  <object id="15" name="Rio" x="2672" y="624" width="272" height="176"/>
+  <object id="16" name="Rio" x="2944" y="720" width="304" height="160"/>
+  <object id="19" name="Rio" x="3008" y="880" width="368" height="64"/>
+  <object id="20" name="Rio" x="3120" y="944" width="256" height="320"/>
+  <object id="22" name="Rio" x="3280" y="1264" width="208" height="160"/>
+  <object id="24" name="Rio" x="3488" y="1296" width="32" height="128"/>
+  <object id="25" name="Rio" x="3280" y="1424" width="240" height="128"/>
+  <object id="26" x="3120" y="1264">
+   <polygon points="0,0 160,0 160,160"/>
+  </object>
+  <object id="27" name="Rio" x="3888" y="1776" width="96" height="304"/>
+  <object id="28" name="Rio" x="4480" y="2208" width="320" height="240"/>
+  <object id="30" name="Rio" x="3296" y="1552">
+   <polygon points="0,0 336,0 544,208 544,480 512,448 432,448"/>
+  </object>
+  <object id="32" name="Rio" x="160" y="576">
+   <polygon points="0,0 80,0 64,16 64,48 128,112 144,128 80,128 32,80 16,80 0,96"/>
+  </object>
+  <object id="33" name="Rio" x="224" y="704">
+   <polygon points="0,0 -80,80 -80,160 0,224"/>
+  </object>
+  <object id="34" name="Rio" x="352" y="720">
+   <polygon points="0,0 48,48 0,48"/>
+  </object>
+  <object id="35" name="Rio" x="160" y="336">
+   <polygon points="0,0 0,64 64,64"/>
+  </object>
+  <object id="36" name="Rio" x="368" y="928">
+   <polygon points="0,0 48,48 112,48 160,0"/>
+  </object>
+  <object id="37" name="Rio" x="512" y="768">
+   <polygon points="0,0 48,48 48,128 16,160 0,160"/>
+  </object>
+  <object id="38" name="Rio" x="1904" y="576">
+   <polygon points="0,0 80,0 80,80"/>
+  </object>
+  <object id="39" name="Rio" x="1984" y="656">
+   <polygon points="0,0 32,0 32,32"/>
+  </object>
+  <object id="40" name="Rio" x="1984" y="416">
+   <polygon points="0,0 64,64 0,64"/>
+  </object>
+  <object id="41" name="Rio" x="2624" y="528">
+   <polygon points="0,0 48,48 0,48"/>
+  </object>
+  <object id="42" name="Rio" x="2672" y="576">
+   <polygon points="0,0 48,48 0,48"/>
+  </object>
+  <object id="43" name="Rio" x="2512" y="688">
+   <polygon points="0,0 112,0 112,112"/>
+  </object>
+  <object id="44" name="Rio" x="2864" y="800">
+   <polygon points="0,0 80,0 80,80"/>
+  </object>
+  <object id="45" name="Rio" x="2944" y="880">
+   <polygon points="0,0 64,0 64,64"/>
+  </object>
+  <object id="46" name="Rio" x="2944" y="624">
+   <polygon points="0,0 80,96 0,96"/>
+  </object>
+  <object id="47" name="Rio" x="3248" y="720">
+   <polygon points="0,0 128,128 128,160 0,160"/>
+  </object>
+  <object id="48" name="Rio" x="3120" y="1264">
+   <polygon points="0,0 160,0 160,160"/>
+  </object>
+  <object id="49" name="Rio" x="3376" y="1152">
+   <polygon points="0,0 112,112 0,112"/>
+  </object>
+  <object id="50" name="Rio" x="3520" y="1440">
+   <polygon points="0,0 112,112 0,112"/>
+  </object>
+  <object id="51" name="Rio" x="3840" y="2032">
+   <polygon points="0,0 48,48 48,-256 0,-256"/>
+  </object>
+  <object id="61" name="Indio" x="4560" y="2736" width="16" height="16"/>
+  <object id="64" name="comida" x="4304" y="2560" width="16" height="16"/>
+  <object id="65" name="player" x="2368" y="2256" width="16" height="16"/>
+ </objectgroup>
 </map>
