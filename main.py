@@ -4,6 +4,7 @@
 Created on Fri May 17 14:16:22 2019
 @author: beatrizcf
 """
+#
 
 import pygame as pg
 import sys
@@ -13,6 +14,7 @@ import sprites
 import tilemap
 import random
 import time
+
 img_dir = path.join(path.dirname(__file__), 'img')
 
 font_name=pg.font.match_font('arial')
@@ -56,11 +58,11 @@ class game_intro:
         background = pg.image.load(path.join(img_dir,"apresentaçao.png")).convert()
         gameDisplay.blit(background, background.get_rect())
         pg.display.update()
-        time.sleep(8)
+        time.sleep(3)
         background = pg.image.load(path.join(img_dir,"como jogar.png")).convert()
         gameDisplay.blit(background, background.get_rect())
         pg.display.update()
-        time.sleep(5) 
+        time.sleep(3) 
 		  
         g = Game()
         g.show_start_screen()
@@ -89,8 +91,11 @@ class Game:
         game_folder = path.dirname(__file__)
         snd_folder = path.join(game_folder,'snd')
         img_folder = path.join(game_folder, 'img')
+        map_folder = path.join(game_folder, 'map')
         self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
-        self.map = tilemap.Map(path.join(game_folder, 'map2.txt'))
+        self.map = tilemap.TiledMap(path.join(map_folder, 'mapapoke.tmx'))
+        self.map_img = self.map.Makemap() 
+        self.map_rect = self.map_img.get_rect()
         self.player_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
         self.madeira_img = pg.image.load(path.join(img_folder,settings.MADEIRA_IMG)).convert_alpha()
         self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
@@ -114,18 +119,29 @@ class Game:
             self.comidas.append(sprites.food(self,random.randrange(0,500),random.randrange(0,500),4))
             self.all_sprites.add(self.comidas[i])
             self.comida.add(self.comidas[i])
-        for row, tiles in enumerate(self.map.data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    sprites.Wall(self, col, row)
-                if tile == 'P':
-                    self.player = sprites.Player(self, col, row)
-                    self.all_sprites.add(self.player)
-                if tile == 'b':
-                    self.bed = sprites.Bed(self,col,row)
-                if tile == 'e':
-                    self.inimigo = sprites.canibais(self,col,row)
-                    self.inimigos.append(self.inimigo)
+        #for row, tiles in enumerate(self.map.data):
+            #for col, tile in enumerate(tiles):
+                #if tile == '1':
+                    #sprites.Wall(self, col, row)
+                #if tile == 'P':
+                    #self.player = sprites.Player(self, col, row)
+                    #self.all_sprites.add(self.player)
+                #if tile == 'b':
+                    #self.bed = sprites.Bed(self,col,row)
+                #if tile == 'e':
+                    #self.inimigo = sprites.canibais(self,col,row)
+                    #self.inimigos.append(self.inimigo)
+        for tile_object in self.map.tmxdata.objects:
+            if tile_object == 'player':
+                self.player = sprites.Player(self,tile_object.x, tile_object.y)
+            if tile_object == 'madeira':
+                self.madeira = sprites.Wall(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object == 'comida':
+                self.food = sprites.Food(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object == 'cotoco':
+                self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+        
+        self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -239,8 +255,9 @@ class Game:
         self.screen.blit(text_surface, text_rect)
 
     def draw(self):
-        self.screen.fill(settings.BGCOLOR)
-        self.draw_grid()
+        #self.screen.fill(settings.BGCOLOR)
+        #self.draw_grid()
+        self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
         for sprite in self.all_sprites:
             if isinstance(sprite,sprites.Player):
                 sprite.draw_life()
@@ -297,12 +314,12 @@ class Game:
                     self.player.tired=0
                 if event.key == pg.K_SPACE:
                     #print(self.player.x - self.inimigo.x)
-                    if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:
-                        if self.player.pos.y - self.bed.y <=50 and self.player.pos.y - self.bed.y>=-50:
-                            self.player.pos.x=self.bed.x   ###
-                            self.player.pos.y=self.bed.y
-                            self.bed.recharge(self.player)
-                            self.player.tired=0
+                    #if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:
+                        #if self.player.pos.y - self.bed.y <=50 and self.player.pos.y - self.bed.y>=-50:
+                            #self.player.pos.x=self.bed.x   ###
+                            #self.player.pos.y=self.bed.y
+                            #self.bed.recharge(self.player)
+                            #self.player.tired=0
                     for i in self.comidas:
                         if self.player.pos.x - i.x<=50 and self.player.pos.x - i.x>=-50:
                             if self.player.pos.y - i.y <=50 and self.player.pos.y - i.y>=-50:
@@ -314,6 +331,14 @@ class Game:
                                     self.comidas.append(sprites.food(self,random_x,random_y,4)) 
                                     if self.player.hungry<0:
                                         self.player.hungry=0
+#                    if self.player.pos.x - self.madeira.x<=50 and self.player.pos.x - self.madeira.x>=-50:
+#                        if self.player.pos.y - self.madeira.y <=50 and self.player.pos.y - self.madeira.y>=-50:
+#                            self.player.tabuas+=1
+#                            self.madeira.gotten()
+#                            random_x = random.randrange(0,500)
+#                            random_y = random.randrange(0,500)
+#                            if self.player.tabuas<5:
+#                                self.madeira = sprites.wood(self,random_x,random_y)
                     if self.player.pos.x - self.madeira.x<=50 and self.player.pos.x - self.madeira.x>=-50:
                         if self.player.pos.y - self.madeira.y <=50 and self.player.pos.y - self.madeira.y>=-50:
                             self.player.tabuas+=1

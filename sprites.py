@@ -29,7 +29,7 @@ class Player(pg.sprite.Sprite):
         self.hit_rect = settings.PLAYER_HIT_RECT
         self.hit_rect.center = self.rect.center
         self.vel = vec(0,0) #velocity vector
-        self.pos = vec(x,y) * settings.TILESIZE #position vector
+        self.pos = vec(x,y)  #position vector
         self.rot = 0 
         self.hungry = settings.PLAYER_HUNGRY
         self.health = settings.PLAYER_HEALTH
@@ -102,6 +102,18 @@ class Player(pg.sprite.Sprite):
         self.health_bar = pg.Rect(0,0,width,7)
         if self.health<100:
             pg.draw.rect(self.image,col,self.health_bar)
+            
+class Obstacle(pg.sprite.Sprite):
+    def __init__(self, game, x, y, w, h ):
+        self.groups = game.walls
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        
+        self.rect = pg.Rect(x,y,h,w)
+        self.x = x
+        self.y = y
+        self.rect.x = x 
+        self.rect.y = y 
 
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
