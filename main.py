@@ -331,8 +331,8 @@ class Game:
                 if event.key == pg.K_SPACE:
                     #print(self.player.x - self.inimigo.x)
                     for sprite in self.beds:
-                        if self.player.pos.x - sprite.x<=50 and self.player.pos.x - sprite.x>=-50:
-                            if self.player.pos.y - sprite.y <=50 and self.player.pos.y - sprite.y>=-50:
+                        if self.player.pos.x - sprite.x<=100 and self.player.pos.x - sprite.x>=-100:
+                            if self.player.pos.y - sprite.y <=100 and self.player.pos.y - sprite.y>=-100:
                                 self.player.pos.x=sprite.x   ###
                                 self.player.pos.y=sprite.y
                                 sprite.recharge(self.player)

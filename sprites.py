@@ -37,8 +37,8 @@ class Player(pg.sprite.Sprite):
         self.tired=0
         self.health = 100
         self.damage = 10
-        self.tabuas = 5
-        self.cordas = 3
+        self.tabuas = 0
+        self.cordas = 0
         self.weapon = 0
         
     def get_keys(self):
