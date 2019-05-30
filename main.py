@@ -93,7 +93,7 @@ class Game:
         img_folder = path.join(game_folder, 'img')
         map_folder = path.join(game_folder, 'map')
         self.snd_background=pg.mixer.Sound(path.join(snd_folder,'gaivota.wav'))
-        self.map = tilemap.TiledMap(path.join(map_folder, 'mapapoke.tmx'))
+        self.map = tilemap.TiledMap(path.join(map_folder, 'labirinto.tmx'))
         self.map_img = self.map.Makemap() 
         self.map_rect = self.map_img.get_rect()
         self.inimigo_img=pg.image.load(path.join(img_folder, settings.PLAYER_IMG)).convert_alpha()
@@ -110,6 +110,7 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.bed = pg.sprite.Group()
+        self.beds=[]
         self.comida = pg.sprite.Group()
         #self.madeira = sprites.wood(self,random.randrange(0,800),random.randrange(0,800))
         #self.cordas_classe = sprites.rope (self,random.randrange(0,800),random.randrange(0,800))
@@ -147,16 +148,23 @@ class Game:
                 self.comida= sprites.food(self,tile_object.x,tile_object.y,4)
                 self.comidas.append(self.comida)
                 self.all_sprites.add(self.comida)
-            if tile_object.name == 'Rio':
+            if tile_object.name == 'barreira':
                 self.obstacle = sprites.Obstacle(self,tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            if tile_object.name == 'Indio':
-                self.inimigo = sprites.canibais(self,tile_object.x, tile_object.y)
-                self.inimigos.append(self.inimigo)
-                self.all_sprites.add(self.inimigo)
+            #if tile_object.name == 'Indio':
+                #self.inimigo = sprites.canibais(self,tile_object.x, tile_object.y)
+                #self.inimigos.append(self.inimigo)
+                #self.all_sprites.add(self.inimigo)
             if tile_object.name == 'corda':
                 self.corda = sprites.rope(self,tile_object.x, tile_object.y)
                 self.cordas.append(self.corda)
                 self.all_sprites.add(self.corda)
+            if tile_object.name == 'bed':
+                self.bed = sprites.Bed(self,tile_object.x, tile_object.y)
+                self.beds.append(self.bed)
+                self.all_sprites.add(self.bed)
+            if tile_object.name == 'vitoria':
+                self.vitoriax= tile_object.x
+                self.vitoriay= tile_object.y
         #self.player = sprites.Player(self,5,5)
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
@@ -177,32 +185,34 @@ class Game:
         sys.exit()
 
     def win (self):
-       if self.player.tabuas >= 5 and self.player.cordas>=3:
-            background = pg.image.load(path.join(img_dir, "final.png")).convert()
-            gameDisplay.blit(background, background.get_rect())               
-            pg.display.update()
-            time.sleep(2)
-            pg.init()
-            intro = True
-            while intro:
-                clock.tick(15)
-                for event in pg.event.get():
-                     if event.type == pg.QUIT:
-                         pg.quit()
-                         sys.exit()
-                     if event.type ==pg.KEYDOWN:
-                         if event.key==pg.K_SPACE:
-                             intro=False
-                background= pg.image.load(path.join(img_dir, "fundo2.png")).convert()
-                gameDisplay.blit(background, background.get_rect())
-
-                pg.display.update()
+       if self.player.tabuas == 5 and self.player.cordas == 3:
+           if self.player.pos.x - self.vitoriax<=50 and self.player.pos.x - self.vitoriax>=-50:
+                    if self.player.pos.y - self.vitoriay <=50 and self.player.pos.y - self.vitoriay>=-50:
+                        background = pg.image.load(path.join(img_dir, "final.png")).convert()
+                        gameDisplay.blit(background, background.get_rect())               
+                        pg.display.update()
+                        time.sleep(2)
+                        pg.init()
+                        intro = True
+                        while intro:
+                            clock.tick(15)
+                            for event in pg.event.get():
+                                 if event.type == pg.QUIT:
+                                     pg.quit()
+                                     sys.exit()
+                                 if event.type ==pg.KEYDOWN:
+                                     if event.key==pg.K_SPACE:
+                                         intro=False
+                            background= pg.image.load(path.join(img_dir, "fundo2.png")).convert()
+                            gameDisplay.blit(background, background.get_rect())
             
-            g = Game()
-            g.show_start_screen()
-            while True:
-                g.new()
-                g.run()
+                            pg.display.update()
+                        
+                        g = Game()
+                        g.show_start_screen()
+                        while True:
+                            g.new()
+                            g.run()
               
     def check_damage(self):
         if self.dia%60==0:
@@ -218,7 +228,7 @@ class Game:
         self.camera.update(self.player)
             
     def morte(self):        
-        if self.player.energy <= 0 or self.player.hungry >= 100 or self.player.health<=0 :
+        if self.player.health<=0 :
             background=pg.image.load(path.join(img_dir, "game over.png")).convert()
             gameDisplay.blit(background, background.get_rect())
             pg.display.update()
@@ -244,7 +254,10 @@ class Game:
             while True:
                 g.new()
                 g.run()   
-                g.show_go_screen()         
+                g.show_go_screen()   
+        if self.player.energy <= 0 or self.player.hungry >= 100:
+            if self.dia%60==0:
+                self.player.health-=5
 
     def draw_grid(self):
         for x in range(0, settings.WIDTH, settings.TILESIZE):
@@ -300,8 +313,6 @@ class Game:
                 self.quit()
                 
             if event.type == pg.KEYDOWN:
-                for sprite in self.inimigos:
-                    print (self.player.pos.x - sprite.pos.x)
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 #Movimentação                    
@@ -319,12 +330,14 @@ class Game:
                     self.player.tired=0
                 if event.key == pg.K_SPACE:
                     #print(self.player.x - self.inimigo.x)
-                    #if self.player.pos.x - self.bed.x<=50 and self.player.pos.x - self.bed.x>=-50:
-                        #if self.player.pos.y - self.bed.y <=50 and self.player.pos.y - self.bed.y>=-50:
-                            #self.player.pos.x=self.bed.x   ###
-                            #self.player.pos.y=self.bed.y
-                            #self.bed.recharge(self.player)
-                            #self.player.tired=0
+                    for sprite in self.beds:
+                        if self.player.pos.x - sprite.x<=50 and self.player.pos.x - sprite.x>=-50:
+                            if self.player.pos.y - sprite.y <=50 and self.player.pos.y - sprite.y>=-50:
+                                self.player.pos.x=sprite.x   ###
+                                self.player.pos.y=sprite.y
+                                sprite.recharge(self.player)
+                                self.player.tired=0
+                                self.player.health=100
                     for i in self.comidas:
                         if self.player.pos.x - i.x<=50 and self.player.pos.x - i.x>=-50:
                             if self.player.pos.y - i.y <=50 and self.player.pos.y - i.y>=-50:

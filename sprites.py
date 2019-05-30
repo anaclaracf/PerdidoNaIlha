@@ -37,8 +37,8 @@ class Player(pg.sprite.Sprite):
         self.tired=0
         self.health = 100
         self.damage = 10
-        self.tabuas = 0
-        self.cordas = 0
+        self.tabuas = 5
+        self.cordas = 3
         self.weapon = 0
         
     def get_keys(self):
@@ -88,8 +88,8 @@ class Player(pg.sprite.Sprite):
         self.rect.center = self.hit_rect.center
         #self.hungry += 1
         #self.energy -= 0.5
-        if self.energy<0 or self.hungry>1000:
-            self.kill()
+        #if self.energy<0 or self.hungry>1000:
+            #self.kill()
         
     def draw_life(self):
         if self.health>60:
@@ -134,13 +134,13 @@ class Bed(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = game.cama_img
-        self.image.set_colorkey (settings.WHITE)
-        self.image = pg.transform.scale(self.image,(90,40))
+        #self.image.set_colorkey (settings.WHITE)
+        self.image = pg.transform.scale(self.image,(80,40))
         self.rect = self.image.get_rect()
-        self.x = x * settings.TILESIZE
-        self.y = y * settings.TILESIZE
-        self.rect.x = x * settings.TILESIZE
-        self.rect.y = y * settings.TILESIZE
+        self.x = x #* settings.TILESIZE
+        self.y = y #* settings.TILESIZE
+        self.rect.x = x #* settings.TILESIZE
+        self.rect.y = y #* settings.TILESIZE
         
     def recharge(self,player):
         player.energy = 100
