@@ -40,7 +40,7 @@ PLAYER_HEALTH = 100
 PLAYER_IMG = 'manBlue_gun.png'
 
 #Food settings
-FOOD_NUTRI = 20
+FOOD_NUTRI = 10
 COMIDA_IMG = 'pizza.png'
 
 #Monstro

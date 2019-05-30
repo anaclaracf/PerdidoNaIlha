@@ -115,7 +115,7 @@ class Game:
         #self.madeira = sprites.wood(self,random.randrange(0,800),random.randrange(0,800))
         #self.cordas_classe = sprites.rope (self,random.randrange(0,800),random.randrange(0,800))
         self.cordas=[]
-        self.corda=pg.sprite.Group()
+        self.corda=pg.sprite.Group() 
         self.madeiras=[]
         self.madeira=pg.sprite.Group()
         self.inimigo = pg.sprite.Group()
@@ -288,7 +288,10 @@ class Game:
         self.draw_text(str('Madeiras:{0}'.format(self.player.tabuas)),18,settings.WIDTH-70,10)
         self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
         self.draw_text(str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
-        self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
+        if self.player.tabuas<5 or self.player.cordas<3:
+            self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
+        else:
+            self.draw_text(str('Objetivo: Escape pelo barco'),18,200,settings.HEIGHT-150)
         for sprite in self.inimigos:
             if sprite.health>0:
                 if self.player.pos.x - sprite.pos.x<=400 and self.player.pos.x - sprite.pos.x>=-400:
