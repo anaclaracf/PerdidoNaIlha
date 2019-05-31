@@ -25,7 +25,7 @@ pg.display.set_caption("ESCAPE THE ISLAND")
 clock = pg.time.Clock()
  
 def text_objects(text, font):
-    textSurface = font.render(text, True, settings.WHITE)
+    textSurface = font.render(text, True, settings.BLACK)
     return textSurface, textSurface.get_rect()
 
 def message_display(text,pg):
@@ -267,7 +267,7 @@ class Game:
     
     def draw_text(self,text,size,x,y):
         font=pg.font.Font(font_name,size)
-        text_surface=font.render(text,True,settings.WHITE)
+        text_surface=font.render(text,True,settings.BLACK)
         text_rect=text_surface.get_rect()
         text_rect.midtop=(x,y)
         self.screen.blit(text_surface, text_rect)
@@ -287,7 +287,6 @@ class Game:
         self.draw_text(str('Vida:{0}'.format(self.player.health)),18,settings.WIDTH/2,50)
         self.draw_text(str('Madeiras:{0}'.format(self.player.tabuas)),18,settings.WIDTH-70,10)
         self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
-        self.draw_text(str('Ataque:{0}'.format(self.player.damage)),18,50,settings.HEIGHT-80)
         if self.player.tabuas<5 or self.player.cordas<3:
             self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
         else:
