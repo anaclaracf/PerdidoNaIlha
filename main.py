@@ -297,8 +297,8 @@ class Game:
                         self.player.energy=0
                 if event.key == pg.K_SPACE:
                     for sprite in self.beds:
-                        if self.player.pos.x - sprite.x<=75 and self.player.pos.x - sprite.x>=-75:
-                            if self.player.pos.y - sprite.y <=75 and self.player.pos.y - sprite.y>=-75:
+                        if self.player.pos.x - sprite.x<=50 and self.player.pos.x - sprite.x>=-50:
+                            if self.player.pos.y - sprite.y <=50 and self.player.pos.y - sprite.y>=-50:
                                 self.player.pos.x=sprite.x   ###
                                 self.player.pos.y=sprite.y
                                 sprite.recharge(self.player)
@@ -310,8 +310,8 @@ class Game:
                                 if self.player.hungry>=4:
                                     self.player.hungry+=i.hungry                                    
                                     i.done()                                 
-                                    if self.player.hungry<0:
-                                        self.player.hungry=0
+                                    if self.player.hungry>100:
+                                        self.player.hungry=100
                     for sprite in self.madeiras:
                         if self.player.pos.x - sprite.x<=50 and self.player.pos.x - sprite.x>=-50:
                             if self.player.pos.y - sprite.y <=50 and self.player.pos.y - sprite.y>=-50:

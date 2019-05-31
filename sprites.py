@@ -133,9 +133,9 @@ class Bed(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.cama_img
+        self.image = pg.Surface((settings.TILESIZE,settings.TILESIZE))
         #self.image.set_colorkey (settings.WHITE)
-        self.image = pg.transform.scale(self.image,(80,40))
+        #self.image = pg.transform.scale(self.image,(80,40))
         self.rect = self.image.get_rect()
         self.x = x #* settings.TILESIZE
         self.y = y #* settings.TILESIZE
