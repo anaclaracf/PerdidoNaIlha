@@ -35,7 +35,7 @@ PLAYER_SPEED = 300
 PLAYER_ROT_SPEED = 175
 PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
 PLAYER_ENERGY = 50
-PLAYER_HUNGRY = 0
+PLAYER_HUNGRY = 100
 PLAYER_HEALTH = 100
 PLAYER_IMG = 'manBlue_gun.png'
 
@@ -55,3 +55,9 @@ CORDA_IMG='corda1.png'
 
 #Cama
 CAMA_IMG='bed.png'
+
+#Quadro
+QUADRO = 'quadro.png'
+
+#TOCHA
+TOCHA = 'tocha.png'

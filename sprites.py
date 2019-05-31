@@ -37,8 +37,8 @@ class Player(pg.sprite.Sprite):
         self.tired=0
         self.health = 100
         self.damage = 10
-        self.tabuas = 0
-        self.cordas = 0
+        self.tabuas = 5
+        self.cordas = 3
         self.weapon = 0
         
     def get_keys(self):
@@ -144,7 +144,7 @@ class Bed(pg.sprite.Sprite):
         
     def recharge(self,player):
         player.energy = 100
-        time.sleep (3)
+        
 
 class food (pg.sprite.Sprite):
     def __init__ (self,game,x,y,hungry):
@@ -278,6 +278,34 @@ class canibais(pg.sprite.Sprite):
         self.health_bar = pg.Rect(0,0,width,7)
         if self.health<30:
             pg.draw.rect(self.image,col,self.health_bar)
+
+class quadro(pg.sprite.Sprite):
+    def __init__(self,game,x,y):
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self,self.groups)
+        self.game = game
+        self.image=game.quadro_img
+        self.image.set_colorkey(settings.WHITE)
+        self.image=pg.transform.scale(self.image,(300,400))
+        self.rect = self.image.get_rect()
+        self.x=x
+        self.y=y
+        self.rect.x = x
+        self.rect.y = y
+    
+class tocha(pg.sprite.Sprite):
+    def __init__(self,game,x,y):
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self,self.groups)
+        self.game = game
+        self.image=game.tocha_img
+        self.image.set_colorkey(settings.WHITE)
+        self.image=pg.transform.scale(self.image,(30,20))
+        self.rect = self.image.get_rect()
+        self.x=x
+        self.y=y
+        self.rect.x = x
+        self.rect.y = y
 inventario = {
         'roupas': {
                 'calça': ' algodao',
