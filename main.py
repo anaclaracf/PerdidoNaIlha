@@ -94,7 +94,6 @@ class Game:
         self.corda_img = pg.image.load(path.join(img_folder,settings.CORDA_IMG)).convert_alpha()
         self.comida_img = pg.image.load(path.join(img_folder,settings.COMIDA_IMG)).convert_alpha()
         self.cama_img = pg.image.load(path.join(img_folder,settings.CAMA_IMG)).convert_alpha()
-        self.quadro_img = pg.image.load(path.join(img_folder,settings.QUADRO)).convert_alpha()
         self.tocha_img = pg.image.load(path.join(img_folder,settings.TOCHA)).convert_alpha()
     
     def new(self):
@@ -112,7 +111,6 @@ class Game:
         self.inimigo = pg.sprite.Group()
         self.inimigos=[]
         self.comidas=[]
-        self.quadro = sprites.quadro(self,settings.WIDTH/2,settings.HEIGHT/2)
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
                 self.player = sprites.Player(self,tile_object.x, tile_object.y)
@@ -257,9 +255,9 @@ class Game:
         self.draw_text(str('Madeiras:{0}'.format(self.player.tabuas)),18,settings.WIDTH-70,10)
         self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
         if self.player.tabuas<5 or self.player.cordas<3:
-            self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
+            self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-100)
         else:
-            self.draw_text(str('Objetivo: Escape pelo barco'),18,200,settings.HEIGHT-150)
+            self.draw_text(str('Objetivo: Escape pelo barco'),18,200,settings.HEIGHT-100)
             for tile_object in self.map.tmxdata.objects:
                 if tile_object.name == 'tocha':
                     self.tocha = sprites.tocha(self,tile_object.x,tile_object.y)

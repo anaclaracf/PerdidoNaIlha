@@ -23,13 +23,11 @@ class Player(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = game.player_img
-        #self.image.set_colorkey(settings.WHITE)
-        #self.image=pg.transform.scale(self.image, (50,40))
         self.rect = self.image.get_rect()
         self.hit_rect = settings.PLAYER_HIT_RECT
         self.hit_rect.center = self.rect.center
-        self.vel = vec(0,0) #velocity vector
-        self.pos = vec(x,y)  #position vector
+        self.vel = vec(0,0)
+        self.pos = vec(x,y)  
         self.rot = 0 
         self.hungry = settings.PLAYER_HUNGRY
         self.health = settings.PLAYER_HEALTH
@@ -86,11 +84,7 @@ class Player(pg.sprite.Sprite):
         self.hit_rect.centery = self.pos.y
         self.collide_with_walls('y') 
         self.rect.center = self.hit_rect.center
-        #self.hungry += 1
-        #self.energy -= 0.5
-        #if self.energy<0 or self.hungry>1000:
-            #self.kill()
-        
+
     def draw_life(self):
         if self.health>60:
             col=settings.GREEN
@@ -134,13 +128,11 @@ class Bed(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((settings.TILESIZE,settings.TILESIZE))
-        #self.image.set_colorkey (settings.WHITE)
-        #self.image = pg.transform.scale(self.image,(80,40))
         self.rect = self.image.get_rect()
-        self.x = x #* settings.TILESIZE
-        self.y = y #* settings.TILESIZE
-        self.rect.x = x #* settings.TILESIZE
-        self.rect.y = y #* settings.TILESIZE
+        self.x = x 
+        self.y = y 
+        self.rect.x = x 
+        self.rect.y = y 
         
     def recharge(self,player):
         player.energy = 100
@@ -155,10 +147,10 @@ class food (pg.sprite.Sprite):
         self.image.set_colorkey (settings.WHITE)
         self.image = pg.transform.scale(self.image,(50,40))
         self.rect = self.image.get_rect()
-        self.x = x #* settings.TILESIZE
-        self.y = y #* settings.TILESIZE
-        self.rect.x = x #* settings.TILESIZE
-        self.rect.y = y #* settings.TILESIZE
+        self.x = x 
+        self.y = y 
+        self.rect.x = x 
+        self.rect.y = y 
         self.hungry = settings.FOOD_NUTRI
         
     def done (self):
@@ -173,10 +165,10 @@ class wood (pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.image = pg.transform.scale(self.image,(50,40))
         self.image.set_colorkey(settings.WHITE)
-        self.x = x #* settings.TILESIZE
-        self.y = y #* settings.TILESIZE
-        self.rect.x = x #* settings.TILESIZE
-        self.rect.y = y #* settings.TILESIZE
+        self.x = x 
+        self.y = y 
+        self.rect.x = x 
+        self.rect.y = y 
         self.quantidade=1
         
     def gotten (self):
@@ -192,10 +184,10 @@ class rope (pg.sprite.Sprite):
         self.image.set_colorkey(settings.WHITE)
         self.image = pg.transform.scale(self.image,(50,40))
         self.rect = self.image.get_rect()
-        self.x = x #* settings.TILESIZE
-        self.y = y #* settings.TILESIZE
-        self.rect.x = x #* settings.TILESIZE
-        self.rect.y = y #* settings.TILESIZE
+        self.x = x 
+        self.y = y 
+        self.rect.x = x 
+        self.rect.y = y 
         self.quantidade=1
         
     def gotten (self):
@@ -214,10 +206,6 @@ class canibais(pg.sprite.Sprite):
         self.pos= vec(x,y)
         self.hit_rect = settings.MOB_HIT_RECT
         self.hit_rect.center = self.rect.center
-        #self.x = x * settings.TILESIZE
-        #self.y= y * settings.TILESIZE
-        #self.rect.x = x * settings.TILESIZE
-        #self.rect.y = y * settings.TILESIZE
         self.vel= vec(0,0)
         self.acc = vec(0,0)
         self.rect.center = self.pos
@@ -279,19 +267,6 @@ class canibais(pg.sprite.Sprite):
         if self.health<30:
             pg.draw.rect(self.image,col,self.health_bar)
 
-class quadro(pg.sprite.Sprite):
-    def __init__(self,game,x,y):
-        self.groups = game.all_sprites
-        pg.sprite.Sprite.__init__(self,self.groups)
-        self.game = game
-        self.image=game.quadro_img
-        self.image.set_colorkey(settings.WHITE)
-        self.image=pg.transform.scale(self.image,(300,400))
-        self.rect = self.image.get_rect()
-        self.x=x
-        self.y=y
-        self.rect.x = x
-        self.rect.y = y
     
 class tocha(pg.sprite.Sprite):
     def __init__(self,game,x,y):
@@ -306,17 +281,3 @@ class tocha(pg.sprite.Sprite):
         self.y=y
         self.rect.x = x
         self.rect.y = y
-inventario = {
-        'roupas': {
-                'calça': ' algodao',
-                'camisa': ' éter',
-                'sapato':'couro'
-                },
-        'comida': {
-                },
-        'recursos':{
-                },
-        'armas' : {
-                }        
-        }
-    

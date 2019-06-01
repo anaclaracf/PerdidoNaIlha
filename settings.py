@@ -6,7 +6,7 @@ Created on Fri May 17 14:19:13 2019
 """
 import pygame as pg
 
-# define some colors (R, G, B)
+#Cores
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 DARKGREY = (40, 40, 40)
@@ -17,9 +17,9 @@ RED = (255, 0, 0)
 BRIGHT_RED = (200, 0, 0)
 YELLOW = (255, 255, 0)
 
-# game settings
-WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
-HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
+# Config do game
+WIDTH = 1024   
+HEIGHT = 768  
 FPS = 60
 TITLE = "Escape the Island"
 BGCOLOR = DARKGREY
@@ -30,7 +30,7 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 
 FONT_NAME = pg.font.match_font('arial')
 
-# Player settings
+# Player
 PLAYER_SPEED = 300
 PLAYER_ROT_SPEED = 175
 PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
@@ -39,7 +39,7 @@ PLAYER_HUNGRY = 100
 PLAYER_HEALTH = 100
 PLAYER_IMG = 'manBlue_gun.png'
 
-#Food settings
+#Food
 FOOD_NUTRI = 10
 COMIDA_IMG = 'pizza.png'
 
@@ -51,7 +51,7 @@ MOB_HIT_RECT = pg.Rect(0,0,30,30)
 MADEIRA_IMG='madeira.png'
 
 #Corda
-CORDA_IMG='corda1.png'
+CORDA_IMG='corda.png'
 
 #Cama
 CAMA_IMG='bed.png'

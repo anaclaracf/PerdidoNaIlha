@@ -8,7 +8,6 @@ Created on Fri May 17 14:20:45 2019
 import pytmx
 import pygame as pg
 import settings
-import pytmx
 
 def collide_hit_rect (one,two):
     return one.hit_rect.colliderect(two.rect)
@@ -61,10 +60,8 @@ class Camera:
     def update(self, target):
         x = -target.rect.centerx + int(settings.WIDTH / 2)
         y = -target.rect.centery + int(settings.HEIGHT / 2)
-
-        # limit scrolling to map size
-        x = min(0, x)  # left
-        y = min(0, y)  # top
-        x = max(-(self.width - settings.WIDTH), x)  # right
-        y = max(-(self.height - settings.HEIGHT), y)  # bottom
+        x = min(0, x)  
+        y = min(0, y)  
+        x = max(-(self.width - settings.WIDTH), x)  
+        y = max(-(self.height - settings.HEIGHT), y)  
         self.camera = pg.Rect(x, y, self.width, self.height)
