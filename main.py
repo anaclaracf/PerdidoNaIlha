@@ -57,7 +57,7 @@ class game_intro:
         background = pg.image.load(path.join(img_dir,"apresentaçao.png")).convert()
         gameDisplay.blit(background, background.get_rect())
         pg.display.update()
-        time.sleep(3)
+        time.sleep(4)
         background = pg.image.load(path.join(img_dir,"como jogar.png")).convert()
         gameDisplay.blit(background, background.get_rect())
         pg.display.update()
@@ -69,6 +69,7 @@ class game_intro:
             g.new()
             g.run()   
             g.show_go_screen()
+
 
 class Game:
     def __init__(self):
@@ -255,7 +256,7 @@ class Game:
         self.draw_text(str('Madeiras:{0}'.format(self.player.tabuas)),18,settings.WIDTH-70,10)
         self.draw_text(str('Cordas:{0}'.format(self.player.cordas)),18,settings.WIDTH-70,30)
         if self.player.tabuas<5 or self.player.cordas<3:
-            self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-100)
+            self.draw_text(str('Objetivo: Conseguir 3 cordas e 5 madeiras'),18,200,settings.HEIGHT-150)
         else:
             self.draw_text(str('Objetivo: Escape pelo barco'),18,200,settings.HEIGHT-100)
             for tile_object in self.map.tmxdata.objects:

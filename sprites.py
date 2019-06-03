@@ -17,6 +17,9 @@ vec = pg.math.Vector2
 
 from tilemap import collide_hit_rect
 
+gameDisplay = pg.display.set_mode((settings.WIDTH,settings.HEIGHT))
+img_dir = path.join(path.dirname(__file__), 'img')
+
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
@@ -35,8 +38,8 @@ class Player(pg.sprite.Sprite):
         self.tired=0
         self.health = 100
         self.damage = 10
-        self.tabuas = 5
-        self.cordas = 3
+        self.tabuas = 0
+        self.cordas = 0
         self.weapon = 0
         
     def get_keys(self):
@@ -135,8 +138,11 @@ class Bed(pg.sprite.Sprite):
         self.rect.y = y 
         
     def recharge(self,player):
+        background = pg.image.load(path.join(img_dir,"zzz.png")).convert()
+        gameDisplay.blit(background, background.get_rect())
+        pg.display.update()
+        time.sleep(2)
         player.energy = 100
-        
 
 class food (pg.sprite.Sprite):
     def __init__ (self,game,x,y,hungry):
